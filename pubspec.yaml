@@ -1,0 +1,44 @@
+name: alquran_lite_flutter
+description: A new Flutter project.
+
+publish_to: "none"
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=3.0.5 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.2
+  get: ^4.6.5
+  dartz: ^0.10.1
+  equatable: ^2.0.5
+  internet_connection_checker: ^1.0.0+1
+  intl: ^0.18.1
+  http: ^1.0.0
+  pretty_http_logger: ^1.0.1
+  get_storage: ^2.1.1
+  isar: ^3.1.0+1
+  isar_flutter_libs: ^3.1.0+1
+  path_provider: ^2.0.15
+  url_launcher: ^6.1.12
+  package_info_plus: ^4.0.2
+  logger: ^1.4.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^2.0.0
+  hive_generator: ^2.0.0
+  build_runner: ^2.4.6
+  isar_generator: ^3.1.0+1
+
+dependency_overrides:
+  intl: ^0.18.1
+
+flutter:
+  uses-material-design: true
