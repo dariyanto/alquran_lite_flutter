@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../controllers/home_controller.dart';
 
@@ -16,40 +17,52 @@ class HomeView extends GetView<HomeController> {
           onRefresh: () async {
             await controller.getSurat();
           },
-          child: Obx(
-            () => controller.loading.value
-                ? const Center(
-                    child: CircularProgressIndicator(),
-                  )
-                : ListView.builder(
-                    itemCount: controller.data.length,
-                    itemBuilder: (context, index) {
-                      final data = controller.data[index];
-                      return ListTile(
-                        onTap: () async {
-                          await controller.goToDetail(data.nomor);
-                        },
-                        leading: CircleAvatar(
-                          child: Text(data.nomor.toString()),
-                        ),
-                        title: Text(
-                          data.namaLatin ?? '',
-                          style: const TextStyle(
-                            fontWeight: FontWeight.w500,
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Obx(
+              () => controller.loading.value
+                  ? const Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : ListView.builder(
+                      itemCount: controller.data.length,
+                      itemBuilder: (context, index) {
+                        final data = controller.data[index];
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 4.0,
                           ),
-                        ),
-                        subtitle: Text(
-                            "${data.tempatTurun} | ${data.jumlahAyat} Ayat"),
-                        trailing: Text(
-                          data.nama ?? '',
-                          textDirection: TextDirection.rtl,
-                          style: const TextStyle(
-                            fontSize: 32,
+                          child: Card(
+                            child: ListTile(
+                              onTap: () async {
+                                await controller.goToDetail(data.nomor);
+                              },
+                              leading: CircleAvatar(
+                                backgroundColor: Colors.blueGrey,
+                                foregroundColor: Colors.white,
+                                child: Text(data.nomor.toString()),
+                              ),
+                              title: Text(
+                                data.namaLatin ?? '',
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                              subtitle: Text(
+                                  "${data.tempatTurun} - ${data.jumlahAyat} Ayat"),
+                              trailing: Text(
+                                data.nama ?? '',
+                                textDirection: TextDirection.rtl,
+                                style: GoogleFonts.notoSansZanabazarSquare(
+                                  fontSize: 30,
+                                )
+                              ),
+                            ),
                           ),
-                        ),
-                      );
-                    },
-                  ),
+                        );
+                      },
+                    ),
+            ),
           ),
         ));
   }

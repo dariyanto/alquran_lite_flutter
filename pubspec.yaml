@@ -27,6 +27,7 @@ dependencies:
   url_launcher: ^6.1.12
   package_info_plus: ^4.0.2
   logger: ^1.4.0
+  google_fonts: ^5.1.0
 
 dev_dependencies:
   flutter_test:
