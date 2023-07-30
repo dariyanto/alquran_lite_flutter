@@ -7,8 +7,7 @@ import '../../../../domain/repository/app_repository.dart';
 class DetailController extends GetxController {
   final AppRepository appRepository;
   final loading = false.obs;
-  final data = <AyatResponseDataAyat>[].obs;
-  final title = ''.obs;
+  final data = AyatResponse().obs;
 
   final id = Get.arguments;
 
@@ -28,9 +27,30 @@ class DetailController extends GetxController {
           backgroundColor: Colors.red, colorText: Colors.white);
       loading.value = false;
     }, (r) {
-      data.value = r.data?.ayat as List<AyatResponseDataAyat>;
-      title.value = r.data?.namaLatin ?? '';
+      data.value = r;
       loading.value = false;
     });
+  }
+
+  Future<void> openInfo() async {
+    // clean html tag from deskripsi
+    data.value.data?.deskripsi = data.value.data?.deskripsi
+        ?.replaceAll(RegExp(r'<[^>]*>|&[^;]+;'), '')
+        .replaceAll(RegExp(r'&[^;]+;'), '');
+
+    await Get.defaultDialog(
+      titlePadding: const EdgeInsets.only(top: 16.0,bottom: 8.0),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 16.0),
+      title: data.value.data?.namaLatin ?? '',
+      content: SingleChildScrollView(
+        child: Text(
+          data.value.data?.deskripsi ?? '',
+          textAlign: TextAlign.start,
+          style: const TextStyle(
+            fontSize: 16,
+          ),
+        ),
+      ),
+    );
   }
 }

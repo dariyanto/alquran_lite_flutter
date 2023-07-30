@@ -22,7 +22,9 @@ class HomeView extends GetView<HomeController> {
             child: Obx(
               () => controller.loading.value
                   ? const Center(
-                      child: CircularProgressIndicator(),
+                      child: CircularProgressIndicator(
+                        color: Colors.blueGrey,
+                      ),
                     )
                   : ListView.builder(
                       itemCount: controller.data.length,

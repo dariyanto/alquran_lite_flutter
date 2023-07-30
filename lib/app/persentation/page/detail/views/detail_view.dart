@@ -11,8 +11,16 @@ class DetailView extends GetView<DetailController> {
       () {
         return Scaffold(
           appBar: AppBar(
-            title: Text(controller.title.value),
+            title: Text(controller.data.value.data?.namaLatin ?? ''),
             centerTitle: true,
+            actions: [
+              IconButton(
+                onPressed: () async {
+                  await controller.openInfo();
+                },
+                icon: const Icon(Icons.help_outline_outlined),
+              ),
+            ],
           ),
           body: Padding(
             padding: const EdgeInsets.all(16.0),
@@ -22,12 +30,14 @@ class DetailView extends GetView<DetailController> {
               },
               child: controller.loading.value
                   ? const Center(
-                      child: CircularProgressIndicator(),
+                      child: CircularProgressIndicator(
+                        color: Colors.blueGrey,
+                      ),
                     )
                   : ListView.builder(
-                      itemCount: controller.data.length,
+                      itemCount: controller.data.value.data?.ayat?.length,
                       itemBuilder: (context, index) {
-                        final data = controller.data[index];
+                        final data = controller.data.value.data?.ayat?[index];
                         return Padding(
                           padding: const EdgeInsets.symmetric(
                             vertical: 4.0,
@@ -41,7 +51,7 @@ class DetailView extends GetView<DetailController> {
                                   CircleAvatar(
                                     backgroundColor: Colors.blueGrey,
                                     foregroundColor: Colors.white,
-                                    child: Text(data.nomorAyat.toString()),
+                                    child: Text(data?.nomorAyat.toString() ?? '' ),
                                   ),
                                   const SizedBox(
                                     height: 8,
@@ -49,7 +59,7 @@ class DetailView extends GetView<DetailController> {
                                   Align(
                                     alignment: Alignment.centerRight,
                                     child: Text(
-                                      "${data.teksArab}",
+                                      "${data?.teksArab}",
                                       textDirection: TextDirection.rtl,
                                       style: const TextStyle(
                                         fontSize: 32,
@@ -60,7 +70,7 @@ class DetailView extends GetView<DetailController> {
                                     height: 8,
                                   ),
                                   Text(
-                                    "${data.teksLatin}",
+                                    "${data?.teksLatin}",
                                     style: const TextStyle(
                                         fontSize: 16, color: Colors.grey),
                                   ),
@@ -68,7 +78,7 @@ class DetailView extends GetView<DetailController> {
                                     height: 8,
                                   ),
                                   Text(
-                                    "${data.teksIndonesia}",
+                                    "${data?.teksIndonesia}",
                                     style: const TextStyle(
                                       fontSize: 18,
                                     ),
