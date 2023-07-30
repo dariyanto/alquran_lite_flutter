@@ -8,10 +8,13 @@ class DetailController extends GetxController {
   final AppRepository appRepository;
   final loading = false.obs;
   final data = AyatResponse().obs;
-
+  final isFavorite = false.obs;
   final id = Get.arguments;
+  final selectedPosition = 0.obs;
 
   DetailController({required this.appRepository});
+
+  
 
   @override
   void onInit() {
@@ -52,5 +55,19 @@ class DetailController extends GetxController {
         ),
       ),
     );
+  }
+
+  Future<void> toggleFavorite() async {
+    isFavorite.value = !isFavorite.value;
+    // TODO: uncomment this code to enable favorite feature
+    // if (isFavorite.value) {
+    //   await appRepository.addFavorite(data.value.data!);
+    // } else {
+    //   await appRepository.removeFavorite(data.value.data!);
+    // }
+  }
+
+  Future<void> expandCard(int index) async {
+    selectedPosition.value = index;
   }
 }
