@@ -22,8 +22,13 @@ const TafsirSchema = CollectionSchema(
       name: r'ayatId',
       type: IsarType.long,
     ),
-    r'teks': PropertySchema(
+    r'suratId': PropertySchema(
       id: 1,
+      name: r'suratId',
+      type: IsarType.long,
+    ),
+    r'teks': PropertySchema(
+      id: 2,
       name: r'teks',
       type: IsarType.string,
     )
@@ -64,7 +69,8 @@ void _tafsirSerialize(
   Map<Type, List<int>> allOffsets,
 ) {
   writer.writeLong(offsets[0], object.ayatId);
-  writer.writeString(offsets[1], object.teks);
+  writer.writeLong(offsets[1], object.suratId);
+  writer.writeString(offsets[2], object.teks);
 }
 
 Tafsir _tafsirDeserialize(
@@ -75,7 +81,8 @@ Tafsir _tafsirDeserialize(
 ) {
   final object = Tafsir(
     ayatId: reader.readLongOrNull(offsets[0]),
-    teks: reader.readStringOrNull(offsets[1]),
+    suratId: reader.readLongOrNull(offsets[1]),
+    teks: reader.readStringOrNull(offsets[2]),
   );
   object.id = id;
   return object;
@@ -91,6 +98,8 @@ P _tafsirDeserializeProp<P>(
     case 0:
       return (reader.readLongOrNull(offset)) as P;
     case 1:
+      return (reader.readLongOrNull(offset)) as P;
+    case 2:
       return (reader.readStringOrNull(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -306,6 +315,75 @@ extension TafsirQueryFilter on QueryBuilder<Tafsir, Tafsir, QFilterCondition> {
     });
   }
 
+  QueryBuilder<Tafsir, Tafsir, QAfterFilterCondition> suratIdIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'suratId',
+      ));
+    });
+  }
+
+  QueryBuilder<Tafsir, Tafsir, QAfterFilterCondition> suratIdIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'suratId',
+      ));
+    });
+  }
+
+  QueryBuilder<Tafsir, Tafsir, QAfterFilterCondition> suratIdEqualTo(
+      int? value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'suratId',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Tafsir, Tafsir, QAfterFilterCondition> suratIdGreaterThan(
+    int? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'suratId',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Tafsir, Tafsir, QAfterFilterCondition> suratIdLessThan(
+    int? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'suratId',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Tafsir, Tafsir, QAfterFilterCondition> suratIdBetween(
+    int? lower,
+    int? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'suratId',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
   QueryBuilder<Tafsir, Tafsir, QAfterFilterCondition> teksIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
@@ -469,6 +547,18 @@ extension TafsirQuerySortBy on QueryBuilder<Tafsir, Tafsir, QSortBy> {
     });
   }
 
+  QueryBuilder<Tafsir, Tafsir, QAfterSortBy> sortBySuratId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'suratId', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Tafsir, Tafsir, QAfterSortBy> sortBySuratIdDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'suratId', Sort.desc);
+    });
+  }
+
   QueryBuilder<Tafsir, Tafsir, QAfterSortBy> sortByTeks() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'teks', Sort.asc);
@@ -507,6 +597,18 @@ extension TafsirQuerySortThenBy on QueryBuilder<Tafsir, Tafsir, QSortThenBy> {
     });
   }
 
+  QueryBuilder<Tafsir, Tafsir, QAfterSortBy> thenBySuratId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'suratId', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Tafsir, Tafsir, QAfterSortBy> thenBySuratIdDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'suratId', Sort.desc);
+    });
+  }
+
   QueryBuilder<Tafsir, Tafsir, QAfterSortBy> thenByTeks() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'teks', Sort.asc);
@@ -524,6 +626,12 @@ extension TafsirQueryWhereDistinct on QueryBuilder<Tafsir, Tafsir, QDistinct> {
   QueryBuilder<Tafsir, Tafsir, QDistinct> distinctByAyatId() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'ayatId');
+    });
+  }
+
+  QueryBuilder<Tafsir, Tafsir, QDistinct> distinctBySuratId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'suratId');
     });
   }
 
@@ -545,6 +653,12 @@ extension TafsirQueryProperty on QueryBuilder<Tafsir, Tafsir, QQueryProperty> {
   QueryBuilder<Tafsir, int?, QQueryOperations> ayatIdProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'ayatId');
+    });
+  }
+
+  QueryBuilder<Tafsir, int?, QQueryOperations> suratIdProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'suratId');
     });
   }
 

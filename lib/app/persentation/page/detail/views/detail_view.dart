@@ -12,7 +12,7 @@ class DetailView extends GetView<DetailController> {
       () {
         return Scaffold(
           appBar: AppBar(
-            title: Text(controller.data.value.data?.namaLatin ?? ''),
+            title: Text(controller.surat.value.namaLatin ?? ''),
             centerTitle: true,
             actions: [
               // favorite button
@@ -50,9 +50,9 @@ class DetailView extends GetView<DetailController> {
                         ),
                       )
                     : ListView.builder(
-                        itemCount: controller.data.value.data?.ayat?.length,
+                        itemCount: controller.data.length,
                         itemBuilder: (context, index) {
-                          final data = controller.data.value.data?.ayat?[index];
+                          final data = controller.data[index];
                           return Padding(
                             padding: const EdgeInsets.symmetric(
                               vertical: 4.0,
@@ -76,8 +76,7 @@ class DetailView extends GetView<DetailController> {
                                             backgroundColor: Colors.blueGrey,
                                             foregroundColor: Colors.white,
                                             child: Text(
-                                                data?.nomorAyat.toString() ??
-                                                    ''),
+                                                data.ayatId.toString()),
                                           ),
                                           const Spacer(),
                                           Row(
@@ -122,7 +121,7 @@ class DetailView extends GetView<DetailController> {
                                       ),
                                       Align(
                                         alignment: Alignment.centerRight,
-                                        child: Text("${data?.teksArab}",
+                                        child: Text("${data.teksArab}",
                                             textDirection: TextDirection.rtl,
                                             style: GoogleFonts.amiri(
                                               fontSize: 32,
@@ -133,7 +132,7 @@ class DetailView extends GetView<DetailController> {
                                         height: 8,
                                       ),
                                       Text(
-                                        "${data?.teksLatin}",
+                                        "${data.teksLatin}",
                                         style: const TextStyle(
                                             fontSize: 16, color: Colors.grey),
                                       ),
@@ -141,7 +140,7 @@ class DetailView extends GetView<DetailController> {
                                         height: 8,
                                       ),
                                       Text(
-                                        "${data?.teksIndonesia}",
+                                        "${data.teksIndonesia}",
                                         style: const TextStyle(
                                           fontSize: 18,
                                         ),

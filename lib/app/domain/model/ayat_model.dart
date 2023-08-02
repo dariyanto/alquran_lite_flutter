@@ -1,10 +1,5 @@
-import 'package:isar/isar.dart';
-
-part 'ayat_entity.g.dart';
-
-@collection
-class Ayat {
-  Id id = Isar.autoIncrement;
+class AyatModel {
+  int? id;
   int? suratId;
   int? ayatId;
   String? teksArab;
@@ -16,7 +11,8 @@ class Ayat {
   String? audio4;
   String? audio5;
 
-  Ayat({
+  AyatModel({
+    this.id,
     this.suratId,
     this.ayatId,
     this.teksArab,

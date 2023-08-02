@@ -1,6 +1,7 @@
 import 'package:alquran_lite_flutter/app/core/utils/mapper.dart';
-import 'package:alquran_lite_flutter/app/data/data_source/local/model/surat_entity.dart';
+import 'package:alquran_lite_flutter/app/domain/model/ayat_model.dart';
 import 'package:alquran_lite_flutter/app/domain/model/surat_model.dart';
+import 'package:alquran_lite_flutter/app/domain/model/tafsir_model.dart';
 import 'package:dartz/dartz.dart';
 
 import '../../core/error/exceptions.dart';
@@ -8,9 +9,6 @@ import '../../core/error/failures.dart';
 import '../../core/network/network_info.dart';
 import '../../domain/repository/app_repository.dart';
 import '../data_source/local/local_data_source.dart';
-import '../data_source/remote/model/ayat_response.dart';
-import '../data_source/remote/model/surat_response.dart';
-import '../data_source/remote/model/tafsir_response.dart';
 import '../data_source/remote/remote_data_source.dart';
 
 class AppRepositoryImpl extends AppRepository {
@@ -37,7 +35,6 @@ class AppRepositoryImpl extends AppRepository {
         var entities = responses.data!.map((e) => e!.toEntity()).toList();
         await localDataSource.insertSurat(entities);
         return Right(entities.map((e) => e.toModel()).toList());
-
       } on ServerException catch (e) {
         return Left(ServerFailure(message: e.message));
       } on TimeoutException catch (e) {
@@ -50,12 +47,28 @@ class AppRepositoryImpl extends AppRepository {
   }
 
   @override
-  Future<Either<Failure, AyatResponse>> getAyat(int id) async {
+  Future<Either<Failure, SuratModel>> getSuratById(int id) async {
+    var entities = await localDataSource.getSuratById(id);
+    if (entities != null) {
+      return Right(entities.toModel());
+    } else {
+      return const Left(NoDataFailure(message: "Data tidak ditemukan"));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<AyatModel>>> getAyat(int suratId) async {
+    var entities = await localDataSource.getAyat(suratId);
+    if (entities.isNotEmpty) {
+      return Right(entities.map((e) => e.toModel()).toList());
+    }
+
     if (await networkInfo.isConnected) {
       try {
-        final remoteData = await remoteDataSource.getAyat(id);
-
-        return Right(remoteData);
+        final responses = await remoteDataSource.getAyat(suratId);
+        var entities = responses.data!.ayat!.map((e) => e!.toEntity(suratId)).toList();
+        await localDataSource.insertAyat(entities);
+        return Right(entities.map((e) => e.toModel()).toList());
       } on ServerException catch (e) {
         return Left(ServerFailure(message: e.message));
       } on TimeoutException catch (e) {
@@ -68,12 +81,29 @@ class AppRepositoryImpl extends AppRepository {
   }
 
   @override
-  Future<Either<Failure, TafsirResponse>> getTafsir(int id) async {
+  Future<Either<Failure, AyatModel>> getAyatById(int id) async {
+    var entities = await localDataSource.getAyatById(id);
+    if (entities != null) {
+      return Right(entities.toModel());
+    } else {
+      return const Left(NoDataFailure(message: "Data tidak ditemukan"));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<TafsirModel>>> getTafsir(int suratId) async {
+    var entities = await localDataSource.getTafsir(suratId);
+    if (entities.isNotEmpty) {
+      return Right(entities.map((e) => e.toModel()).toList());
+    }
+
     if (await networkInfo.isConnected) {
       try {
-        final remoteData = await remoteDataSource.getTafsir(id);
-
-        return Right(remoteData);
+        final responses = await remoteDataSource.getTafsir(suratId);
+        var entities =
+            responses.data!.tafsir!.map((e) => e!.toEntity()).toList();
+        await localDataSource.insertTafsir(entities);
+        return Right(entities.map((e) => e.toModel()).toList());
       } on ServerException catch (e) {
         return Left(ServerFailure(message: e.message));
       } on TimeoutException catch (e) {
@@ -82,6 +112,16 @@ class AppRepositoryImpl extends AppRepository {
     } else {
       return const Left(
           NoConnectionFailure(message: "Tidak terhubung ke internet"));
+    }
+  }
+
+  @override
+  Future<Either<Failure, TafsirModel>> getTafsirById(int id) async {
+    var entities = await localDataSource.getTafsirById(id);
+    if (entities != null) {
+      return Right(entities.toModel());
+    } else {
+      return const Left(NoDataFailure(message: "Data tidak ditemukan"));
     }
   }
 }

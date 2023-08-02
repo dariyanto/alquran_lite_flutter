@@ -15,6 +15,11 @@ class LocalDataSourceImpl extends LocalDataSource {
   }
 
   @override
+  Future<Surat?> getSuratById(int id) async {
+    return await isar.surats.where().filter().idEqualTo(id).findFirst();
+  }
+
+  @override
   Future<void> insertSurat(List<Surat> surat) async {
     await isar.writeTxn(() async {
       await isar.surats.clear();
@@ -23,27 +28,35 @@ class LocalDataSourceImpl extends LocalDataSource {
   }
 
   @override
-  Future<List<Ayat>> getAyat() async {
-    return await isar.ayats.where().findAll();
+  Future<List<Ayat>> getAyat(int suratId) async {
+    return await isar.ayats.where().filter().suratIdEqualTo(suratId).findAll();
+  }
+
+  @override
+  Future<Ayat?> getAyatById(int id) async {
+    return await isar.ayats.where().filter().idEqualTo(id).findFirst();
   }
 
   @override
   Future<void> insertAyat(List<Ayat> ayat) async {
     await isar.writeTxn(() async {
-      await isar.ayats.clear();
       await isar.ayats.putAll(ayat);
     });
   }
 
   @override
-  Future<List<Tafsir>> getTafsir() async {
-    return await isar.tafsirs.where().findAll();
+  Future<List<Tafsir>> getTafsir(int suratId) async {
+    return await isar.tafsirs.where().filter().suratIdEqualTo(suratId).findAll();
+  }
+  
+  @override
+  Future<Tafsir?> getTafsirById(int id) async {
+    return await isar.tafsirs.where().filter().idEqualTo(id).findFirst();
   }
 
   @override
   Future<void> insertTafsir(List<Tafsir> tafsir) async {
     await isar.writeTxn(() async {
-      await isar.tafsirs.clear();
       await isar.tafsirs.putAll(tafsir);
     });
   }

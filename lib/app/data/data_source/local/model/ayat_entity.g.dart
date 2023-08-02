@@ -42,18 +42,28 @@ const AyatSchema = CollectionSchema(
       name: r'audio5',
       type: IsarType.string,
     ),
-    r'teksArab': PropertySchema(
+    r'ayatId': PropertySchema(
       id: 5,
+      name: r'ayatId',
+      type: IsarType.long,
+    ),
+    r'suratId': PropertySchema(
+      id: 6,
+      name: r'suratId',
+      type: IsarType.long,
+    ),
+    r'teksArab': PropertySchema(
+      id: 7,
       name: r'teksArab',
       type: IsarType.string,
     ),
     r'teksIndonesia': PropertySchema(
-      id: 6,
+      id: 8,
       name: r'teksIndonesia',
       type: IsarType.string,
     ),
     r'teksLatin': PropertySchema(
-      id: 7,
+      id: 9,
       name: r'teksLatin',
       type: IsarType.string,
     )
@@ -140,9 +150,11 @@ void _ayatSerialize(
   writer.writeString(offsets[2], object.audio3);
   writer.writeString(offsets[3], object.audio4);
   writer.writeString(offsets[4], object.audio5);
-  writer.writeString(offsets[5], object.teksArab);
-  writer.writeString(offsets[6], object.teksIndonesia);
-  writer.writeString(offsets[7], object.teksLatin);
+  writer.writeLong(offsets[5], object.ayatId);
+  writer.writeLong(offsets[6], object.suratId);
+  writer.writeString(offsets[7], object.teksArab);
+  writer.writeString(offsets[8], object.teksIndonesia);
+  writer.writeString(offsets[9], object.teksLatin);
 }
 
 Ayat _ayatDeserialize(
@@ -157,9 +169,11 @@ Ayat _ayatDeserialize(
     audio3: reader.readStringOrNull(offsets[2]),
     audio4: reader.readStringOrNull(offsets[3]),
     audio5: reader.readStringOrNull(offsets[4]),
-    teksArab: reader.readStringOrNull(offsets[5]),
-    teksIndonesia: reader.readStringOrNull(offsets[6]),
-    teksLatin: reader.readStringOrNull(offsets[7]),
+    ayatId: reader.readLongOrNull(offsets[5]),
+    suratId: reader.readLongOrNull(offsets[6]),
+    teksArab: reader.readStringOrNull(offsets[7]),
+    teksIndonesia: reader.readStringOrNull(offsets[8]),
+    teksLatin: reader.readStringOrNull(offsets[9]),
   );
   object.id = id;
   return object;
@@ -183,10 +197,14 @@ P _ayatDeserializeProp<P>(
     case 4:
       return (reader.readStringOrNull(offset)) as P;
     case 5:
-      return (reader.readStringOrNull(offset)) as P;
+      return (reader.readLongOrNull(offset)) as P;
     case 6:
-      return (reader.readStringOrNull(offset)) as P;
+      return (reader.readLongOrNull(offset)) as P;
     case 7:
+      return (reader.readStringOrNull(offset)) as P;
+    case 8:
+      return (reader.readStringOrNull(offset)) as P;
+    case 9:
       return (reader.readStringOrNull(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -1001,6 +1019,74 @@ extension AyatQueryFilter on QueryBuilder<Ayat, Ayat, QFilterCondition> {
     });
   }
 
+  QueryBuilder<Ayat, Ayat, QAfterFilterCondition> ayatIdIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'ayatId',
+      ));
+    });
+  }
+
+  QueryBuilder<Ayat, Ayat, QAfterFilterCondition> ayatIdIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'ayatId',
+      ));
+    });
+  }
+
+  QueryBuilder<Ayat, Ayat, QAfterFilterCondition> ayatIdEqualTo(int? value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'ayatId',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Ayat, Ayat, QAfterFilterCondition> ayatIdGreaterThan(
+    int? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'ayatId',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Ayat, Ayat, QAfterFilterCondition> ayatIdLessThan(
+    int? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'ayatId',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Ayat, Ayat, QAfterFilterCondition> ayatIdBetween(
+    int? lower,
+    int? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'ayatId',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
   QueryBuilder<Ayat, Ayat, QAfterFilterCondition> idEqualTo(Id value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
@@ -1045,6 +1131,74 @@ extension AyatQueryFilter on QueryBuilder<Ayat, Ayat, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
         property: r'id',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<Ayat, Ayat, QAfterFilterCondition> suratIdIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'suratId',
+      ));
+    });
+  }
+
+  QueryBuilder<Ayat, Ayat, QAfterFilterCondition> suratIdIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'suratId',
+      ));
+    });
+  }
+
+  QueryBuilder<Ayat, Ayat, QAfterFilterCondition> suratIdEqualTo(int? value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'suratId',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Ayat, Ayat, QAfterFilterCondition> suratIdGreaterThan(
+    int? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'suratId',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Ayat, Ayat, QAfterFilterCondition> suratIdLessThan(
+    int? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'suratId',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Ayat, Ayat, QAfterFilterCondition> suratIdBetween(
+    int? lower,
+    int? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'suratId',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -1556,6 +1710,30 @@ extension AyatQuerySortBy on QueryBuilder<Ayat, Ayat, QSortBy> {
     });
   }
 
+  QueryBuilder<Ayat, Ayat, QAfterSortBy> sortByAyatId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'ayatId', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Ayat, Ayat, QAfterSortBy> sortByAyatIdDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'ayatId', Sort.desc);
+    });
+  }
+
+  QueryBuilder<Ayat, Ayat, QAfterSortBy> sortBySuratId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'suratId', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Ayat, Ayat, QAfterSortBy> sortBySuratIdDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'suratId', Sort.desc);
+    });
+  }
+
   QueryBuilder<Ayat, Ayat, QAfterSortBy> sortByTeksArab() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'teksArab', Sort.asc);
@@ -1654,6 +1832,18 @@ extension AyatQuerySortThenBy on QueryBuilder<Ayat, Ayat, QSortThenBy> {
     });
   }
 
+  QueryBuilder<Ayat, Ayat, QAfterSortBy> thenByAyatId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'ayatId', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Ayat, Ayat, QAfterSortBy> thenByAyatIdDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'ayatId', Sort.desc);
+    });
+  }
+
   QueryBuilder<Ayat, Ayat, QAfterSortBy> thenById() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.asc);
@@ -1663,6 +1853,18 @@ extension AyatQuerySortThenBy on QueryBuilder<Ayat, Ayat, QSortThenBy> {
   QueryBuilder<Ayat, Ayat, QAfterSortBy> thenByIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.desc);
+    });
+  }
+
+  QueryBuilder<Ayat, Ayat, QAfterSortBy> thenBySuratId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'suratId', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Ayat, Ayat, QAfterSortBy> thenBySuratIdDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'suratId', Sort.desc);
     });
   }
 
@@ -1739,6 +1941,18 @@ extension AyatQueryWhereDistinct on QueryBuilder<Ayat, Ayat, QDistinct> {
     });
   }
 
+  QueryBuilder<Ayat, Ayat, QDistinct> distinctByAyatId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'ayatId');
+    });
+  }
+
+  QueryBuilder<Ayat, Ayat, QDistinct> distinctBySuratId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'suratId');
+    });
+  }
+
   QueryBuilder<Ayat, Ayat, QDistinct> distinctByTeksArab(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -1796,6 +2010,18 @@ extension AyatQueryProperty on QueryBuilder<Ayat, Ayat, QQueryProperty> {
   QueryBuilder<Ayat, String?, QQueryOperations> audio5Property() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'audio5');
+    });
+  }
+
+  QueryBuilder<Ayat, int?, QQueryOperations> ayatIdProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'ayatId');
+    });
+  }
+
+  QueryBuilder<Ayat, int?, QQueryOperations> suratIdProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'suratId');
     });
   }
 

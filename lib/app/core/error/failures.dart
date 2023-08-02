@@ -36,3 +36,7 @@ class TimeoutFailure extends Failure {
 class PermissionFailure extends Failure {
   const PermissionFailure({required String message}) : super(message: message);
 }
+
+class NoDataFailure extends Failure {
+  const NoDataFailure({required String message}) : super(message: message);
+}

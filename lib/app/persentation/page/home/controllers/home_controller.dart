@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../core/routes/app_pages.dart';
-import '../../../../data/data_source/remote/model/surat_response.dart';
 import '../../../../domain/repository/app_repository.dart';
 
 class HomeController extends GetxController {

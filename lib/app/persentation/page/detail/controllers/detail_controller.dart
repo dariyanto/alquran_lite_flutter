@@ -1,33 +1,50 @@
+import 'package:alquran_lite_flutter/app/domain/model/ayat_model.dart';
+import 'package:alquran_lite_flutter/app/domain/model/surat_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../../data/data_source/remote/model/ayat_response.dart';
 import '../../../../domain/repository/app_repository.dart';
 
 class DetailController extends GetxController {
   final AppRepository appRepository;
   final loading = false.obs;
-  final data = AyatResponse().obs;
+  final data = <AyatModel>[].obs;
+  final surat = SuratModel().obs;
   final isFavorite = false.obs;
   final id = Get.arguments;
   final selectedPosition = 0.obs;
 
   DetailController({required this.appRepository});
 
-  
-
   @override
   void onInit() {
     super.onInit();
     getSurat();
+    getAyat();
   }
 
   Future<void> getSurat() async {
+    final res = await appRepository.getSuratById(id);
+    res.fold((l) {
+      Get.snackbar(
+        'Error',
+        l.message,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+    }, (r) => surat.value = r);
+  }
+
+  Future<void> getAyat() async {
     loading.value = true;
     final res = await appRepository.getAyat(id);
     res.fold((l) {
-      Get.snackbar('Error', l.message,
-          backgroundColor: Colors.red, colorText: Colors.white);
+      Get.snackbar(
+        'Error',
+        l.message,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
       loading.value = false;
     }, (r) {
       data.value = r;
@@ -37,17 +54,17 @@ class DetailController extends GetxController {
 
   Future<void> openInfo() async {
     // clean html tag from deskripsi
-    data.value.data?.deskripsi = data.value.data?.deskripsi
+    var deskripsi = surat.value.deskripsi
         ?.replaceAll(RegExp(r'<[^>]*>|&[^;]+;'), '')
         .replaceAll(RegExp(r'&[^;]+;'), '');
 
     await Get.defaultDialog(
-      titlePadding: const EdgeInsets.only(top: 16.0,bottom: 8.0),
+      titlePadding: const EdgeInsets.only(top: 16.0, bottom: 8.0),
       contentPadding: const EdgeInsets.symmetric(horizontal: 16.0),
-      title: data.value.data?.namaLatin ?? '',
+      title: surat.value.namaLatin ?? '',
       content: SingleChildScrollView(
         child: Text(
-          data.value.data?.deskripsi ?? '',
+          deskripsi ?? '',
           textAlign: TextAlign.start,
           style: const TextStyle(
             fontSize: 16,
