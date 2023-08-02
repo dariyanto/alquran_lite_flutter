@@ -1,3 +1,4 @@
+import 'package:alquran_lite_flutter/app/domain/model/surat_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -8,7 +9,7 @@ import '../../../../domain/repository/app_repository.dart';
 class HomeController extends GetxController {
   final AppRepository appRepository;
   final loading = false.obs;
-  final data = <SuratResponseData>[].obs;
+  final data = <SuratModel>[].obs;
 
   HomeController({required this.appRepository});
 
@@ -26,7 +27,7 @@ class HomeController extends GetxController {
           backgroundColor: Colors.red, colorText: Colors.white);
       loading.value = false;
     }, (r) {
-      data.value = r.data as List<SuratResponseData>;
+      data.value = r;
       loading.value = false;
     });
   }

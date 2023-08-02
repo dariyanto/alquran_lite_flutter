@@ -1,38 +1,43 @@
-// mapper to postresponse from post
-import '../../data/data_source/local/model/post_entity.dart';
-import '../../data/data_source/remote/model/post_response.dart';
-import '../../domain/model/post_model.dart';
+// mapper from surat_response to surat_entity
+import 'package:alquran_lite_flutter/app/data/data_source/remote/model/surat_response.dart';
 
-// mapper from post_response to post_entity
+import '../../data/data_source/local/model/surat_entity.dart';
+import '../../domain/model/surat_model.dart';
 
-extension PostResponseMapper on PostResponse {
-  Post toEntity() {
-    return Post(
-      title: title,
-      body: body,
-      userId: userId,
+extension SuratResponseMapper on SuratResponseData {
+  Surat toEntity(){
+    return Surat(
+      nama: nama,
+      namaLatin: namaLatin,
+      jumlahAyat: jumlahAyat.toString(),
+      tempatTurun: tempatTurun,
+      arti: arti,
+      deskripsi: deskripsi,
+      audio1: audioFull?.the01,
+      audio2: audioFull?.the02,
+      audio3: audioFull?.the02,
+      audio4: audioFull?.the03,
+      audio5: audioFull?.the04,
     );
   }
 }
 
 // mapper from post_entity to post_model
-extension PostEntityMapper on Post {
-  PostModel toModel() {
-    return PostModel(
-      title: title,
-      body: body,
-      userId: userId,
-    );
-  }
-}
-
-// mapper from post_model to post_entity
-extension PostModelMapper on PostModel {
-  Post toEntity() {
-    return Post(
-      title: title,
-      body: body,
-      userId: userId,
+extension SuratEntityMapper on Surat {
+  SuratModel toModel() {
+    return SuratModel(
+      id: id,
+      nama: nama,
+      namaLatin: namaLatin,
+      jumlahAyat: jumlahAyat,
+      tempatTurun: tempatTurun,
+      arti: arti,
+      deskripsi: deskripsi,
+      audio1: audio1,
+      audio2: audio2,
+      audio3: audio3,
+      audio4: audio4,
+      audio5: audio5,
     );
   }
 }

@@ -38,14 +38,14 @@ class HomeView extends GetView<HomeController> {
                             child: Card(
                               child: ListTile(
                                 onTap: () async {
-                                  await controller.goToDetail(data.nomor);
+                                  await controller.goToDetail(data.id);
                                 },
                                 leading: CircleAvatar(
                                   minRadius: 16,
                                   maxRadius: 18,
                                   backgroundColor: Colors.blueGrey,
                                   foregroundColor: Colors.white,
-                                  child: Text(data.nomor.toString()),
+                                  child: Text(data.id.toString()),
                                 ),
                                 title: Text(
                                   data.namaLatin ?? '',

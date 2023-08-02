@@ -8,7 +8,9 @@ import 'app/core/di/app_binding.dart';
 import 'app/core/routes/app_pages.dart';
 import 'app/core/services/auth_service.dart';
 import 'app/core/services/premium_service.dart';
-import 'app/data/data_source/local/model/post_entity.dart';
+import 'app/data/data_source/local/model/ayat_entity.dart';
+import 'app/data/data_source/local/model/surat_entity.dart';
+import 'app/data/data_source/local/model/tafsir_entity.dart';
 
 Future<void> initApp() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,7 +19,7 @@ Future<void> initApp() async {
   await AuthService().signinAnonymously();
   final dir = await getApplicationDocumentsDirectory();
   await Isar.open(
-    [PostSchema],
+    [SuratSchema, AyatSchema, TafsirSchema],
     directory: dir.path,
   );
 }

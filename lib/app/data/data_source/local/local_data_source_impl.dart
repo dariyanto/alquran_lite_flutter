@@ -1,24 +1,50 @@
 import 'package:isar/isar.dart';
 
 import 'local_data_source.dart';
-import 'model/post_entity.dart';
+import 'model/ayat_entity.dart';
+import 'model/surat_entity.dart';
+import 'model/tafsir_entity.dart';
 
 class LocalDataSourceImpl extends LocalDataSource {
   final Isar isar;
   LocalDataSourceImpl({required this.isar});
 
   @override
-  Future<List<Post>> getSurat() async {
-    return await isar.posts.where().findAll();
+  Future<List<Surat>> getSurat() async {
+    return await isar.surats.where().findAll();
   }
 
   @override
-  Future<List<Post>> insertPosts(List<Post> posts) async {
+  Future<void> insertSurat(List<Surat> surat) async {
     await isar.writeTxn(() async {
-      await isar.posts.clear();
-      await isar.posts.putAll(posts);
+      await isar.surats.clear();
+      await isar.surats.putAll(surat);
     });
+  }
 
-    return getSurat();
+  @override
+  Future<List<Ayat>> getAyat() async {
+    return await isar.ayats.where().findAll();
+  }
+
+  @override
+  Future<void> insertAyat(List<Ayat> ayat) async {
+    await isar.writeTxn(() async {
+      await isar.ayats.clear();
+      await isar.ayats.putAll(ayat);
+    });
+  }
+
+  @override
+  Future<List<Tafsir>> getTafsir() async {
+    return await isar.tafsirs.where().findAll();
+  }
+
+  @override
+  Future<void> insertTafsir(List<Tafsir> tafsir) async {
+    await isar.writeTxn(() async {
+      await isar.tafsirs.clear();
+      await isar.tafsirs.putAll(tafsir);
+    });
   }
 }

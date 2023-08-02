@@ -1,3 +1,6 @@
+import 'package:alquran_lite_flutter/app/core/utils/mapper.dart';
+import 'package:alquran_lite_flutter/app/data/data_source/local/model/surat_entity.dart';
+import 'package:alquran_lite_flutter/app/domain/model/surat_model.dart';
 import 'package:dartz/dartz.dart';
 
 import '../../core/error/exceptions.dart';
@@ -22,12 +25,19 @@ class AppRepositoryImpl extends AppRepository {
       : super();
 
   @override
-  Future<Either<Failure, SuratResponse>> getSurat() async {
+  Future<Either<Failure, List<SuratModel>>> getSurat() async {
+    var entities = await localDataSource.getSurat();
+    if (entities.isNotEmpty) {
+      return Right(entities.map((e) => e.toModel()).toList());
+    }
+
     if (await networkInfo.isConnected) {
       try {
-        final remoteData = await remoteDataSource.getSurat();
+        final responses = await remoteDataSource.getSurat();
+        var entities = responses.data!.map((e) => e!.toEntity()).toList();
+        await localDataSource.insertSurat(entities);
+        return Right(entities.map((e) => e.toModel()).toList());
 
-        return Right(remoteData);
       } on ServerException catch (e) {
         return Left(ServerFailure(message: e.message));
       } on TimeoutException catch (e) {
@@ -74,6 +84,4 @@ class AppRepositoryImpl extends AppRepository {
           NoConnectionFailure(message: "Tidak terhubung ke internet"));
     }
   }
-
-  
 }
