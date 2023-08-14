@@ -83,10 +83,11 @@ extension AyatEntityMapper on Ayat {
 }
 
 extension TafsirResponseMapper on TafsirResponseDataTafsir {
-  Tafsir toEntity() {
+  Tafsir toEntity(int suratId) {
     return Tafsir(
       ayatId: ayat,
       teks: teks,
+      suratId: suratId
     );
   }
 }
@@ -94,6 +95,7 @@ extension TafsirResponseMapper on TafsirResponseDataTafsir {
 extension TafsirEntityMapper on Tafsir {
   TafsirModel toModel() {
     return TafsirModel(
+      suratId: suratId,
       ayatId: ayatId,
       teks: teks,
     );

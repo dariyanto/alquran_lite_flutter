@@ -20,7 +20,7 @@ class DetailController extends GetxController {
   void onInit() {
     super.onInit();
     getSurat();
-    getAyat();
+    Future.wait([getAyat(), getTafsir()]);
   }
 
   Future<void> getSurat() async {
@@ -52,6 +52,10 @@ class DetailController extends GetxController {
     });
   }
 
+  Future<void> getTafsir() async {
+    await appRepository.getTafsir(id);
+  }
+
   Future<void> openInfo() async {
     // clean html tag from deskripsi
     var deskripsi = surat.value.deskripsi
@@ -62,12 +66,14 @@ class DetailController extends GetxController {
       titlePadding: const EdgeInsets.only(top: 16.0, bottom: 8.0),
       contentPadding: const EdgeInsets.symmetric(horizontal: 16.0),
       title: surat.value.namaLatin ?? '',
-      content: SingleChildScrollView(
-        child: Text(
-          deskripsi ?? '',
-          textAlign: TextAlign.start,
-          style: const TextStyle(
-            fontSize: 16,
+      content: Expanded(
+        child: SingleChildScrollView(
+          child: Text(
+            deskripsi ?? '',
+            textAlign: TextAlign.start,
+            style: const TextStyle(
+              fontSize: 18,
+            ),
           ),
         ),
       ),
@@ -86,5 +92,34 @@ class DetailController extends GetxController {
 
   Future<void> expandCard(int index) async {
     selectedPosition.value = index;
+  }
+
+  Future<void> openTafsirAyat(int? suratId, int? ayatId) async {
+    var tafsir = await appRepository.getTafsirBySuratAyat(suratId!, ayatId!);
+    tafsir.fold((l) {
+      Get.snackbar(
+        'Error',
+        l.message,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+    }, (r) async {
+      await Get.defaultDialog(
+        titlePadding: const EdgeInsets.only(top: 16.0, bottom: 8.0),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 16.0),
+        title: "Tafsir ${surat.value.namaLatin} ayat $ayatId",
+        content: Expanded(
+          child: SingleChildScrollView(
+            child: Text(
+              r.teks ?? '',
+              textAlign: TextAlign.start,
+              style: const TextStyle(
+                fontSize: 18,
+              ),
+            ),
+          ),
+        ),
+      );
+    });
   }
 }

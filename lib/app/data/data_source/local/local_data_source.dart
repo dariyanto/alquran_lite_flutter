@@ -15,4 +15,6 @@ abstract class LocalDataSource {
   Future<List<Tafsir>> getTafsir(int suratId);
   Future<Tafsir?> getTafsirById(int id);
   Future<void> insertTafsir(List<Tafsir> tafsir);
+
+  Future<Tafsir?> getTafsirBySuratAyat(int suratId, int ayatId);
 }

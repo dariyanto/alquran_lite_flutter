@@ -101,7 +101,7 @@ class AppRepositoryImpl extends AppRepository {
       try {
         final responses = await remoteDataSource.getTafsir(suratId);
         var entities =
-            responses.data!.tafsir!.map((e) => e!.toEntity()).toList();
+            responses.data!.tafsir!.map((e) => e!.toEntity(suratId)).toList();
         await localDataSource.insertTafsir(entities);
         return Right(entities.map((e) => e.toModel()).toList());
       } on ServerException catch (e) {
@@ -118,6 +118,17 @@ class AppRepositoryImpl extends AppRepository {
   @override
   Future<Either<Failure, TafsirModel>> getTafsirById(int id) async {
     var entities = await localDataSource.getTafsirById(id);
+    if (entities != null) {
+      return Right(entities.toModel());
+    } else {
+      return const Left(NoDataFailure(message: "Data tidak ditemukan"));
+    }
+  }
+
+  @override
+  Future<Either<Failure, TafsirModel>> getTafsirBySuratAyat(
+      int suratId, int ayatId) async {
+    var entities = await localDataSource.getTafsirBySuratAyat(suratId, ayatId);
     if (entities != null) {
       return Right(entities.toModel());
     } else {

@@ -60,4 +60,9 @@ class LocalDataSourceImpl extends LocalDataSource {
       await isar.tafsirs.putAll(tafsir);
     });
   }
+
+  @override
+  Future<Tafsir?> getTafsirBySuratAyat(int suratId, int ayatId) async {
+    return await isar.tafsirs.where().filter().suratIdEqualTo(suratId).and().ayatIdEqualTo(ayatId).findFirst();
+  }
 }

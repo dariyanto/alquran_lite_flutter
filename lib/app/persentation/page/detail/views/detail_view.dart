@@ -32,7 +32,7 @@ class DetailView extends GetView<DetailController> {
                 onPressed: () async {
                   await controller.openInfo();
                 },
-                icon: const Icon(Icons.help_outline_outlined),
+                icon: const Icon(Icons.help_outline),
               ),
             ],
           ),
@@ -109,6 +109,16 @@ class DetailView extends GetView<DetailController> {
                                                 onPressed: () {},
                                                 icon: const Icon(
                                                   Icons.favorite_border,
+                                                  color: Colors.blueGrey,
+                                                ),
+                                              ),
+                                              IconButton(
+                                                onPressed: () async {
+                                                  await controller
+                                                      .openTafsirAyat(data.suratId,data.ayatId);
+                                                },
+                                                icon: const Icon(
+                                                  Icons.help_outline,
                                                   color: Colors.blueGrey,
                                                 ),
                                               ),
