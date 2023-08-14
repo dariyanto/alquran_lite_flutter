@@ -5,7 +5,7 @@ Aplikasi Al-Quran Lite ini dibuat menggunakan Flutter. Aplikasi ini menggunakan 
 ## Fitur
     [x] Daftar Surah
     [x] Daftar Ayat
-    [ ] Tafsir
+    [x] Tafsir
     [ ] Bookmark
     [ ] Riwayat baca
     [ ] Terakhir di baca
@@ -23,8 +23,9 @@ Aplikasi Al-Quran Lite ini dibuat menggunakan Flutter. Aplikasi ini menggunakan 
 <!-- create 2 x 3 table with header Light Mode and Dark Mode -->
 | Light Mode | Dark Mode |
 |------------|-----------|
-|![Screenshot](screenshot/light_1.png)|![Screenshot](screenshot/dark_1.png)|
-|![Screenshot](screenshot/light_2.png)|![Screenshot](screenshot/dark_2.png)|
+|![Screenshot](screenshot/light_surat.png)|![Screenshot](screenshot/dark_surat.png)|
+|![Screenshot](screenshot/light_ayat.png)|![Screenshot](screenshot/dark_ayat.png)|
+|![Screenshot](screenshot/light_tafsir.png)|![Screenshot](screenshot/dark_tafsir.png)|
 
 ## Cara Install
 - Clone repository ini
