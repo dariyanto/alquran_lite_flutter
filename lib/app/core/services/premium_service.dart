@@ -1,6 +1,5 @@
-
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../utils/const.dart';
 
@@ -23,10 +22,12 @@ class PremiumService extends GetxService {
   void updatePremiumStatus() {
     // var isPremium = customerInfo.entitlements.all['Premium'] != null && customerInfo.entitlements.all['Premium']?.isActive == true;
     // Logger().d('isPremium: $isPremium');
-    GetStorage().write(IS_PREMIUM, isPremium);
+    var prefs = Get.find<SharedPreferences>();
+    prefs.setBool(IS_PREMIUM, true);
   }
 
   static bool isPremium() {
-    return GetStorage().read(IS_PREMIUM) ?? false;
+    var prefs = Get.find<SharedPreferences>();
+    return prefs.getBool(IS_PREMIUM) ?? false;
   }
 }

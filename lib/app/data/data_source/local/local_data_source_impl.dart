@@ -1,7 +1,9 @@
+import 'package:alquran_lite_flutter/app/data/data_source/local/model/bookmark_entity.dart';
 import 'package:isar/isar.dart';
 
 import 'local_data_source.dart';
 import 'model/ayat_entity.dart';
+import 'model/riwayat_entity.dart';
 import 'model/surat_entity.dart';
 import 'model/tafsir_entity.dart';
 
@@ -64,5 +66,57 @@ class LocalDataSourceImpl extends LocalDataSource {
   @override
   Future<Tafsir?> getTafsirBySuratAyat(int suratId, int ayatId) async {
     return await isar.tafsirs.where().filter().suratIdEqualTo(suratId).and().ayatIdEqualTo(ayatId).findFirst();
+  }
+
+  @override
+  Future<void> insertBookmark(int suratId, int ayatId) async {
+    await isar.writeTxn(() async {
+      await isar.bookmarks.put(Bookmark(suratId: suratId, ayatId: ayatId));
+    });
+  }
+
+  @override
+  Future<List<Bookmark>> getBookmark() async {
+    return await isar.bookmarks.where().findAll();
+  }
+
+  @override
+  Future<void> deleteBookmark(int suratId, int ayatId) async {
+    await isar.writeTxn(() async {
+      await isar.bookmarks.where().filter().suratIdEqualTo(suratId).and().ayatIdEqualTo(ayatId).deleteFirst();
+    });
+  }
+
+  @override
+  Future<void> deleteAllBookmark() async {
+    await isar.writeTxn(() async {
+      await isar.bookmarks.clear();
+    });
+  }
+
+  @override
+  Future<void> insertRiwayat(int suratId, int ayatId) async {
+    await isar.writeTxn(() async {
+      await isar.riwayats.put(Riwayat(suratId: suratId, ayatId: ayatId));
+    });
+  }
+
+  @override
+  Future<List<Riwayat>> getRiwayat() async {
+    return await isar.riwayats.where().findAll();
+  }
+
+  @override
+  Future<void> deleteRiwayat(int suratId, int ayatId) async {
+    await isar.writeTxn(() async {
+      await isar.riwayats.where().filter().suratIdEqualTo(suratId).and().ayatIdEqualTo(ayatId).deleteFirst();
+    });
+  }
+
+  @override
+  Future<void> deleteAllRiwayat() async {
+    await isar.writeTxn(() async {
+      await isar.riwayats.clear();
+    });
   }
 }

@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:isar/isar.dart';
 import 'package:pretty_http_logger/pretty_http_logger.dart';
@@ -27,7 +26,6 @@ class AppBinding extends Bindings {
     Get.put<RemoteDataSource>(RemoteDataSourceImpl(client: Get.find()));
 
     Get.put(Isar.getInstance()!);
-    Get.put(GetStorage());
     Get.put<LocalDataSource>(LocalDataSourceImpl(isar: Get.find()));
 
     Get.put<AppRepository>(AppRepositoryImpl(

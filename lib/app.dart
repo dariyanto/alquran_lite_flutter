@@ -1,8 +1,10 @@
+import 'package:alquran_lite_flutter/app/data/data_source/local/model/bookmark_entity.dart';
+import 'package:alquran_lite_flutter/app/data/data_source/local/model/riwayat_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:isar/isar.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'app/core/di/app_binding.dart';
 import 'app/core/routes/app_pages.dart';
@@ -14,12 +16,13 @@ import 'app/data/data_source/local/model/tafsir_entity.dart';
 
 Future<void> initApp() async {
   WidgetsFlutterBinding.ensureInitialized();
+  var prefs = await SharedPreferences.getInstance();
+  Get.lazyPut(() => prefs);
   await PremiumService().init();
-  await GetStorage.init();
   await AuthService().signinAnonymously();
   final dir = await getApplicationDocumentsDirectory();
   await Isar.open(
-    [SuratSchema, AyatSchema, TafsirSchema],
+    [SuratSchema, AyatSchema, TafsirSchema, BookmarkSchema, RiwayatSchema],
     directory: dir.path,
   );
 }
