@@ -10,7 +10,9 @@ final router = GoRouter(
     ),
     GoRoute(
       path: '/:suratId',
-      builder: (context, state) => const AyatView(),
+      builder: (context, state) => AyatView(
+        suratId: state.pathParameters['suratId']!,
+      ),
     ),
   ],
 );

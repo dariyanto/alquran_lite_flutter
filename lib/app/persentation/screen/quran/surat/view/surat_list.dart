@@ -1,5 +1,7 @@
+import 'package:alquran_lite_flutter/app/persentation/screen/quran/surat/view/surat_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 import '../bloc/surat_bloc.dart';
 
@@ -12,19 +14,21 @@ class SuratList extends StatelessWidget {
       builder: (context, state) {
         if (state is SuratInitial) {
           return const Center(
-            child: CircularProgressIndicator(
-              color: Colors.blue,
-            ),
+            child: CircularProgressIndicator(),
           );
         } else if (state is SuratLoaded) {
-          return ListView.builder(
-            itemCount: state.surats.length,
-            itemBuilder: (context, index) {
-              var data = state.surats[index];
-              return ListTile(
-                title: Text(data.namaLatin ?? ''),
-              );
-            },
+          return Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: ListView.builder(
+              itemCount: state.surats.length,
+              itemBuilder: (context, index) {
+                var data = state.surats[index];
+                return SuratItem(
+                  data: data,
+                  onTap: () => context.push('/${data.id}'),
+                );
+              },
+            ),
           );
         } else if (state is SuratError) {
           return Center(

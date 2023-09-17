@@ -9,7 +9,8 @@ sealed class AyatEvent extends Equatable {
 
 
 class FetchedAyat extends AyatEvent {
-  const FetchedAyat();
+  final String suratId;
+  const FetchedAyat({required this.suratId});
 
   @override
   List<Object> get props => [];

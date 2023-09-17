@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'app/core/di/service_locator.dart';
-import 'app/core/routes/app_pages.dart';
+import 'app/core/routes/app_routes.dart';
 import 'app/core/services/auth_service.dart';
 
 

@@ -12,7 +12,10 @@ class SuratView extends StatelessWidget {
   Widget build(BuildContext context) {
     var repository = sl<AppRepository>();
     return Scaffold(
-      appBar: AppBar(title: const Text('Surat')),
+      appBar: AppBar(
+        title: const Text('Al-Qur\'an Lite Flutter'),
+        centerTitle: true,
+      ),
       body: BlocProvider(
         create: (context) => SuratBloc(
           repository,
