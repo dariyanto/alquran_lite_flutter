@@ -1,6 +1,6 @@
-import 'package:alquran_lite_flutter/app/domain/model/ayat_model.dart';
-import 'package:alquran_lite_flutter/app/domain/model/surat_model.dart';
-import 'package:alquran_lite_flutter/app/domain/model/tafsir_model.dart';
+import '../model/ayat_model.dart';
+import '../model/surat_model.dart';
+import '../model/tafsir_model.dart';
 import 'package:dartz/dartz.dart';
 
 import '../../core/error/failures.dart';

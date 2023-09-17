@@ -1,122 +1,122 @@
-import 'package:alquran_lite_flutter/app/data/data_source/local/model/bookmark_entity.dart';
 import 'package:isar/isar.dart';
 
 import 'local_data_source.dart';
 import 'model/ayat_entity.dart';
+import 'model/bookmark_entity.dart';
 import 'model/riwayat_entity.dart';
 import 'model/surat_entity.dart';
 import 'model/tafsir_entity.dart';
 
 class LocalDataSourceImpl extends LocalDataSource {
-  final Isar isar;
-  LocalDataSourceImpl({required this.isar});
+  final Isar db;
+  LocalDataSourceImpl({required this.db});
 
   @override
   Future<List<Surat>> getSurat() async {
-    return await isar.surats.where().findAll();
+    return await db.surats.where().findAll();
   }
 
   @override
   Future<Surat?> getSuratById(int id) async {
-    return await isar.surats.where().filter().idEqualTo(id).findFirst();
+    return await db.surats.where().filter().idEqualTo(id).findFirst();
   }
 
   @override
   Future<void> insertSurat(List<Surat> surat) async {
-    await isar.writeTxn(() async {
-      await isar.surats.clear();
-      await isar.surats.putAll(surat);
+    await db.writeTxn(() async {
+      await db.surats.clear();
+      await db.surats.putAll(surat);
     });
   }
 
   @override
   Future<List<Ayat>> getAyat(int suratId) async {
-    return await isar.ayats.where().filter().suratIdEqualTo(suratId).findAll();
+    return await db.ayats.where().filter().suratIdEqualTo(suratId).findAll();
   }
 
   @override
   Future<Ayat?> getAyatById(int id) async {
-    return await isar.ayats.where().filter().idEqualTo(id).findFirst();
+    return await db.ayats.where().filter().idEqualTo(id).findFirst();
   }
 
   @override
   Future<void> insertAyat(List<Ayat> ayat) async {
-    await isar.writeTxn(() async {
-      await isar.ayats.putAll(ayat);
+    await db.writeTxn(() async {
+      await db.ayats.putAll(ayat);
     });
   }
 
   @override
   Future<List<Tafsir>> getTafsir(int suratId) async {
-    return await isar.tafsirs.where().filter().suratIdEqualTo(suratId).findAll();
+    return await db.tafsirs.where().filter().suratIdEqualTo(suratId).findAll();
   }
   
   @override
   Future<Tafsir?> getTafsirById(int id) async {
-    return await isar.tafsirs.where().filter().idEqualTo(id).findFirst();
+    return await db.tafsirs.where().filter().idEqualTo(id).findFirst();
   }
 
   @override
   Future<void> insertTafsir(List<Tafsir> tafsir) async {
-    await isar.writeTxn(() async {
-      await isar.tafsirs.putAll(tafsir);
+    await db.writeTxn(() async {
+      await db.tafsirs.putAll(tafsir);
     });
   }
 
   @override
   Future<Tafsir?> getTafsirBySuratAyat(int suratId, int ayatId) async {
-    return await isar.tafsirs.where().filter().suratIdEqualTo(suratId).and().ayatIdEqualTo(ayatId).findFirst();
+    return await db.tafsirs.where().filter().suratIdEqualTo(suratId).and().ayatIdEqualTo(ayatId).findFirst();
   }
 
   @override
   Future<void> insertBookmark(int suratId, int ayatId) async {
-    await isar.writeTxn(() async {
-      await isar.bookmarks.put(Bookmark(suratId: suratId, ayatId: ayatId));
+    await db.writeTxn(() async {
+      await db.bookmarks.put(Bookmark(suratId: suratId, ayatId: ayatId));
     });
   }
 
   @override
   Future<List<Bookmark>> getBookmark() async {
-    return await isar.bookmarks.where().findAll();
+    return await db.bookmarks.where().findAll();
   }
 
   @override
   Future<void> deleteBookmark(int suratId, int ayatId) async {
-    await isar.writeTxn(() async {
-      await isar.bookmarks.where().filter().suratIdEqualTo(suratId).and().ayatIdEqualTo(ayatId).deleteFirst();
+    await db.writeTxn(() async {
+      await db.bookmarks.where().filter().suratIdEqualTo(suratId).and().ayatIdEqualTo(ayatId).deleteFirst();
     });
   }
 
   @override
   Future<void> deleteAllBookmark() async {
-    await isar.writeTxn(() async {
-      await isar.bookmarks.clear();
+    await db.writeTxn(() async {
+      await db.bookmarks.clear();
     });
   }
 
   @override
   Future<void> insertRiwayat(int suratId, int ayatId) async {
-    await isar.writeTxn(() async {
-      await isar.riwayats.put(Riwayat(suratId: suratId, ayatId: ayatId));
+    await db.writeTxn(() async {
+      await db.riwayats.put(Riwayat(suratId: suratId, ayatId: ayatId));
     });
   }
 
   @override
   Future<List<Riwayat>> getRiwayat() async {
-    return await isar.riwayats.where().findAll();
+    return await db.riwayats.where().findAll();
   }
 
   @override
   Future<void> deleteRiwayat(int suratId, int ayatId) async {
-    await isar.writeTxn(() async {
-      await isar.riwayats.where().filter().suratIdEqualTo(suratId).and().ayatIdEqualTo(ayatId).deleteFirst();
+    await db.writeTxn(() async {
+      await db.riwayats.where().filter().suratIdEqualTo(suratId).and().ayatIdEqualTo(ayatId).deleteFirst();
     });
   }
 
   @override
   Future<void> deleteAllRiwayat() async {
-    await isar.writeTxn(() async {
-      await isar.riwayats.clear();
+    await db.writeTxn(() async {
+      await db.riwayats.clear();
     });
   }
 }

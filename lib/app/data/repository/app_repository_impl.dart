@@ -1,7 +1,7 @@
-import 'package:alquran_lite_flutter/app/core/utils/mapper.dart';
-import 'package:alquran_lite_flutter/app/domain/model/ayat_model.dart';
-import 'package:alquran_lite_flutter/app/domain/model/surat_model.dart';
-import 'package:alquran_lite_flutter/app/domain/model/tafsir_model.dart';
+import '../../core/utils/mapper.dart';
+import '../../domain/model/ayat_model.dart';
+import '../../domain/model/surat_model.dart';
+import '../../domain/model/tafsir_model.dart';
 import 'package:dartz/dartz.dart';
 
 import '../../core/error/exceptions.dart';

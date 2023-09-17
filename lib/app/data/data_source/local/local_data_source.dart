@@ -1,6 +1,6 @@
 
-import 'package:alquran_lite_flutter/app/data/data_source/local/model/bookmark_entity.dart';
-import 'package:alquran_lite_flutter/app/data/data_source/local/model/riwayat_entity.dart';
+import 'model/bookmark_entity.dart';
+import 'model/riwayat_entity.dart';
 
 import 'model/ayat_entity.dart';
 import 'model/surat_entity.dart';

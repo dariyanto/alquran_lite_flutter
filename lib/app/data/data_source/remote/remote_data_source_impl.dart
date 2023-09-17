@@ -10,14 +10,14 @@ import 'model/tafsir_response.dart';
 import 'remote_data_source.dart';
 
 class RemoteDataSourceImpl implements RemoteDataSource {
-  final HttpWithMiddleware client;
+  final HttpWithMiddleware http;
 
-  RemoteDataSourceImpl({required this.client});
+  RemoteDataSourceImpl({required this.http});
 
   @override
   Future<SuratResponse> getSurat() async {
     try {
-      var res = await client
+      var res = await http
           .get(Uri.parse('$BASE_URL/surat'));
       if (res.statusCode != 200) {
         throw ServerException(message: res.body);
@@ -31,7 +31,7 @@ class RemoteDataSourceImpl implements RemoteDataSource {
   @override
   Future<AyatResponse> getAyat(int id) async {
     try {
-      var res = await client.get(Uri.parse('$BASE_URL/surat/$id'));
+      var res = await http.get(Uri.parse('$BASE_URL/surat/$id'));
       if (res.statusCode != 200) {
         throw ServerException(message: res.body);
       }
@@ -44,7 +44,7 @@ class RemoteDataSourceImpl implements RemoteDataSource {
   @override
   Future<TafsirResponse> getTafsir(int id) async {
     try {
-      var res = await client.get(Uri.parse('$BASE_URL/tafsir/$id'));
+      var res = await http.get(Uri.parse('$BASE_URL/tafsir/$id'));
       if (res.statusCode != 200) {
         throw ServerException(message: res.body);
       }
