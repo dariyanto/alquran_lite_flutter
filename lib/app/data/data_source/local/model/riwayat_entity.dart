@@ -1,12 +1,26 @@
-import 'package:isar/isar.dart';
+import 'package:floor/floor.dart';
 
-part 'riwayat_entity.g.dart';
-
-@collection
+@entity
 class Riwayat {
-  Id id = Isar.autoIncrement;
-  int? suratId;
-  int? ayatId;
+  @PrimaryKey(autoGenerate: true)
+  final int? id;
+  final int? suratId;
+  final int? ayatId;
+  final DateTime timestamp;
 
-  Riwayat({this.suratId, this.ayatId});
+  Riwayat(this.id, this.suratId, this.ayatId, this.timestamp);
+
+  factory Riwayat.optional({
+    int? id,
+    int? suratId,
+    int? ayatId,
+    DateTime? timestamp,
+  }) {
+    return Riwayat(
+      id,
+      suratId,
+      ayatId,
+      timestamp ?? DateTime.now(),
+    );
+  }
 }

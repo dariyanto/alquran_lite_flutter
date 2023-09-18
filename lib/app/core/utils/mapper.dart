@@ -12,7 +12,8 @@ import '../../domain/model/tafsir_model.dart';
 
 extension SuratResponseMapper on SuratResponseData {
   Surat toEntity(){
-    return Surat(
+    return Surat.optional(
+      suratId: nomor,
       nama: nama,
       namaLatin: namaLatin,
       jumlahAyat: jumlahAyat.toString(),
@@ -32,6 +33,7 @@ extension SuratEntityMapper on Surat {
   SuratModel toModel() {
     return SuratModel(
       id: id,
+      suratId: suratId,
       nama: nama,
       namaLatin: namaLatin,
       jumlahAyat: jumlahAyat,
@@ -49,7 +51,7 @@ extension SuratEntityMapper on Surat {
 
 extension AyatResponseMapper on AyatResponseDataAyat {
   Ayat toEntity(id) {
-    return Ayat(
+    return Ayat.optional(
       suratId: id,
       ayatId: nomorAyat,
       teksArab: teksArab,
@@ -84,7 +86,7 @@ extension AyatEntityMapper on Ayat {
 
 extension TafsirResponseMapper on TafsirResponseDataTafsir {
   Tafsir toEntity(int suratId) {
-    return Tafsir(
+    return Tafsir.optional(
       ayatId: ayat,
       teks: teks,
       suratId: suratId

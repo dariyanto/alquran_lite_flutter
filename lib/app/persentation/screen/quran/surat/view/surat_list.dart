@@ -1,9 +1,11 @@
+import 'package:alquran_lite_flutter/app/domain/model/surat_model.dart';
+
+import 'surat_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../bloc/surat_bloc.dart';
-import 'surat_item.dart';
 
 class SuratList extends StatelessWidget {
   const SuratList({super.key});
@@ -22,10 +24,10 @@ class SuratList extends StatelessWidget {
             child: ListView.builder(
               itemCount: state.surats.length,
               itemBuilder: (context, index) {
-                var data = state.surats[index];
+                SuratModel data = state.surats[index];
                 return SuratItem(
                   data: data,
-                  onTap: () => context.push('/${data.id}'),
+                  onTap: () => context.push('/${data.suratId}'),
                 );
               },
             ),

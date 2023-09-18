@@ -32,8 +32,9 @@ class AppRepositoryImpl extends AppRepository {
     if (await networkInfo.isConnected) {
       try {
         final responses = await remoteDataSource.getSurat();
-        var entities = responses.data!.map((e) => e!.toEntity()).toList();
-        await localDataSource.insertSurat(entities);
+        var surats = responses.data!.map((e) => e!.toEntity()).toList();
+        await localDataSource.insertSurat(surats);
+        var entities = await localDataSource.getSurat();
         return Right(entities.map((e) => e.toModel()).toList());
       } on ServerException catch (e) {
         return Left(ServerFailure(message: e.message));
@@ -66,8 +67,10 @@ class AppRepositoryImpl extends AppRepository {
     if (await networkInfo.isConnected) {
       try {
         final responses = await remoteDataSource.getAyat(suratId);
-        var entities = responses.data!.ayat!.map((e) => e!.toEntity(suratId)).toList();
-        await localDataSource.insertAyat(entities);
+        var ayats =
+            responses.data!.ayat!.map((e) => e!.toEntity(suratId)).toList();
+        await localDataSource.insertAyat(ayats);
+        var entities = await localDataSource.getAyat(suratId);
         return Right(entities.map((e) => e.toModel()).toList());
       } on ServerException catch (e) {
         return Left(ServerFailure(message: e.message));

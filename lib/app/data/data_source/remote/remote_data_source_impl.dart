@@ -16,41 +16,28 @@ class RemoteDataSourceImpl implements RemoteDataSource {
 
   @override
   Future<SuratResponse> getSurat() async {
-    try {
-      var res = await http
-          .get(Uri.parse('$BASE_URL/surat'));
-      if (res.statusCode != 200) {
-        throw ServerException(message: res.body);
-      }
-      return SuratResponse.fromJson(jsonDecode(res.body));
-    } catch (e) {
-      throw TimeoutException(message: e.toString());
+    var res = await http.get(Uri.parse('$BASE_URL/surat'));
+    if (res.statusCode != 200) {
+      throw ServerException(message: res.body);
     }
+    return SuratResponse.fromJson(jsonDecode(res.body));
   }
 
   @override
   Future<AyatResponse> getAyat(int id) async {
-    try {
-      var res = await http.get(Uri.parse('$BASE_URL/surat/$id'));
-      if (res.statusCode != 200) {
-        throw ServerException(message: res.body);
-      }
-      return AyatResponse.fromJson(jsonDecode(res.body));
-    } catch (e) {
-      throw TimeoutException(message: e.toString());
+    var res = await http.get(Uri.parse('$BASE_URL/surat/$id'));
+    if (res.statusCode != 200) {
+      throw ServerException(message: res.body);
     }
+    return AyatResponse.fromJson(jsonDecode(res.body));
   }
 
   @override
   Future<TafsirResponse> getTafsir(int id) async {
-    try {
-      var res = await http.get(Uri.parse('$BASE_URL/tafsir/$id'));
-      if (res.statusCode != 200) {
-        throw ServerException(message: res.body);
-      }
-      return TafsirResponse.fromJson(jsonDecode(res.body));
-    } catch (e) {
-      throw TimeoutException(message: e.toString());
+    var res = await http.get(Uri.parse('$BASE_URL/tafsir/$id'));
+    if (res.statusCode != 200) {
+      throw ServerException(message: res.body);
     }
+    return TafsirResponse.fromJson(jsonDecode(res.body));
   }
 }

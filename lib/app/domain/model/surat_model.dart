@@ -1,5 +1,6 @@
 class SuratModel {
   int? id;
+  int? suratId;
   String? nama;
   String? namaLatin;
   String? jumlahAyat;
@@ -14,6 +15,7 @@ class SuratModel {
 
   SuratModel({
     this.id,
+    this.suratId,
     this.nama,
     this.namaLatin,
     this.jumlahAyat,

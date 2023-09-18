@@ -1,13 +1,23 @@
-import 'package:isar/isar.dart';
+import 'package:floor/floor.dart';
 
-part 'tafsir_entity.g.dart';
-
-@collection
+@entity
 class Tafsir {
-  Id id = Isar.autoIncrement;
-  int? suratId;
-  int? ayatId;
-  String? teks;
+  @PrimaryKey(autoGenerate: true)
+  final int? id;
+  final int? suratId;
+  final int? ayatId;
+  final String? teks;
+  final DateTime timestamp;
 
-  Tafsir({this.suratId, this.ayatId, this.teks});
+  Tafsir(this.id, this.suratId, this.ayatId, this.teks, this.timestamp);
+
+  factory Tafsir.optional({
+    int? id,
+    int? suratId,
+    int? ayatId,
+    String? teks,
+    DateTime? timestamp,
+  }) {
+    return Tafsir(id, suratId, ayatId, teks, timestamp ?? DateTime.now());
+  }
 }
