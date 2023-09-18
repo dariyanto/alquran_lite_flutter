@@ -1,7 +1,8 @@
-import 'package:alquran_lite_flutter/app/persentation/screen/quran/ayat/view/ayat_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import '../bloc/ayat_bloc.dart';
+import 'ayat_item.dart';
 
 class AyatList extends StatelessWidget {
   const AyatList({super.key});

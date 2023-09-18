@@ -1,9 +1,9 @@
-import '../model/ayat_model.dart';
-import '../model/surat_model.dart';
-import '../model/tafsir_model.dart';
 import 'package:dartz/dartz.dart';
 
 import '../../core/error/failures.dart';
+import '../model/ayat_model.dart';
+import '../model/surat_model.dart';
+import '../model/tafsir_model.dart';
 
 abstract class AppRepository {
   Future<Either<Failure, List<SuratModel>>> getSurat();

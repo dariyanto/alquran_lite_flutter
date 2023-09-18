@@ -7,8 +7,8 @@ sealed class SuratEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class FetchedSurat extends SuratEvent {
-  const FetchedSurat();
+class SuratFetchRequested extends SuratEvent {
+  const SuratFetchRequested();
 
   @override
   List<Object> get props => [];

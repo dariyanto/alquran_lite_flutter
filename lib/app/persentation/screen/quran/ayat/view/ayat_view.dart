@@ -1,4 +1,4 @@
-import 'package:alquran_lite_flutter/app/persentation/screen/quran/ayat/bloc/ayat_bloc.dart';
+import '../bloc/ayat_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -16,7 +16,7 @@ class AyatView extends StatelessWidget {
     return BlocProvider(
       create: (context) => AyatBloc(
         repository,
-      )..add(FetchedAyat(
+      )..add(AyatFetchRequested(
           suratId: suratId,
       )),
       child: Scaffold(

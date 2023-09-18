@@ -1,7 +1,7 @@
-import 'package:alquran_lite_flutter/app/core/di/service_locator.dart';
-import 'package:alquran_lite_flutter/app/domain/repository/app_repository.dart';
-import 'package:alquran_lite_flutter/app/persentation/screen/quran/surat/bloc/surat_bloc.dart';
-import 'package:alquran_lite_flutter/app/persentation/screen/quran/surat/view/surat_list.dart';
+import '../../../../../core/di/service_locator.dart';
+import '../../../../../domain/repository/app_repository.dart';
+import '../bloc/surat_bloc.dart';
+import 'surat_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -20,7 +20,7 @@ class SuratView extends StatelessWidget {
         create: (context) => SuratBloc(
           repository,
         )..add(
-            const FetchedSurat(),
+            const SuratFetchRequested(),
           ),
         child: const SuratList(),
       ),

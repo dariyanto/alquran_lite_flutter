@@ -1,4 +1,4 @@
-import 'package:alquran_lite_flutter/app/domain/model/surat_model.dart';
+import '../../../../../domain/model/surat_model.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
@@ -11,13 +11,13 @@ class SuratBloc extends Bloc<SuratEvent, SuratState> {
   final AppRepository repository;
   SuratBloc(this.repository) : super(SuratInitial()) {
     on<SuratEvent>((event, emit) async {
-      if (event is FetchedSurat) {
-        await _mapFetchedSuratToState(emit);
+      if (event is SuratFetchRequested) {
+        await _mapSuratFetchRequestedToState(emit);
       }
     });
   }
   
-  Future<void> _mapFetchedSuratToState(Emitter<SuratState> emit) async{
+  Future<void> _mapSuratFetchRequestedToState(Emitter<SuratState> emit) async{
     var res = await repository.getSurat();
     res.fold((l) {
       emit(SuratError(l.message));

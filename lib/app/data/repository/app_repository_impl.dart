@@ -1,12 +1,12 @@
-import '../../core/utils/mapper.dart';
-import '../../domain/model/ayat_model.dart';
-import '../../domain/model/surat_model.dart';
-import '../../domain/model/tafsir_model.dart';
 import 'package:dartz/dartz.dart';
 
 import '../../core/error/exceptions.dart';
 import '../../core/error/failures.dart';
 import '../../core/network/network_info.dart';
+import '../../core/utils/mapper.dart';
+import '../../domain/model/ayat_model.dart';
+import '../../domain/model/surat_model.dart';
+import '../../domain/model/tafsir_model.dart';
 import '../../domain/repository/app_repository.dart';
 import '../data_source/local/local_data_source.dart';
 import '../data_source/remote/remote_data_source.dart';
