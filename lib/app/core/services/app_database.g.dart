@@ -61,13 +61,13 @@ class _$AppDatabase extends AppDatabase {
     changeListener = listener ?? StreamController<String>.broadcast();
   }
 
+  SuratDao? _suratDaoInstance;
+
   AyatDao? _ayatDaoInstance;
 
   BookmarkDao? _bookmarkDaoInstance;
 
   RiwayatDao? _riwayatDaoInstance;
-
-  SuratDao? _suratDaoInstance;
 
   TafsirDao? _tafsirDaoInstance;
 
@@ -114,6 +114,11 @@ class _$AppDatabase extends AppDatabase {
   }
 
   @override
+  SuratDao get suratDao {
+    return _suratDaoInstance ??= _$SuratDao(database, changeListener);
+  }
+
+  @override
   AyatDao get ayatDao {
     return _ayatDaoInstance ??= _$AyatDao(database, changeListener);
   }
@@ -129,11 +134,6 @@ class _$AppDatabase extends AppDatabase {
   }
 
   @override
-  SuratDao get suratDao {
-    return _suratDaoInstance ??= _$SuratDao(database, changeListener);
-  }
-
-  @override
   TafsirDao get tafsirDao {
     return _tafsirDaoInstance ??= _$TafsirDao(database, changeListener);
   }
@@ -141,6 +141,99 @@ class _$AppDatabase extends AppDatabase {
   @override
   StatistikDao get statistikDao {
     return _statistikDaoInstance ??= _$StatistikDao(database, changeListener);
+  }
+}
+
+class _$SuratDao extends SuratDao {
+  _$SuratDao(
+    this.database,
+    this.changeListener,
+  )   : _queryAdapter = QueryAdapter(database),
+        _suratInsertionAdapter = InsertionAdapter(
+            database,
+            'Surat',
+            (Surat item) => <String, Object?>{
+                  'id': item.id,
+                  'suratId': item.suratId,
+                  'nama': item.nama,
+                  'namaLatin': item.namaLatin,
+                  'jumlahAyat': item.jumlahAyat,
+                  'tempatTurun': item.tempatTurun,
+                  'arti': item.arti,
+                  'deskripsi': item.deskripsi,
+                  'audio1': item.audio1,
+                  'audio2': item.audio2,
+                  'audio3': item.audio3,
+                  'audio4': item.audio4,
+                  'audio5': item.audio5,
+                  'timestamp': _dateTimeConverter.encode(item.timestamp)
+                });
+
+  final sqflite.DatabaseExecutor database;
+
+  final StreamController<String> changeListener;
+
+  final QueryAdapter _queryAdapter;
+
+  final InsertionAdapter<Surat> _suratInsertionAdapter;
+
+  @override
+  Future<List<Surat>> findAllSurat() async {
+    return _queryAdapter.queryList('SELECT * FROM Surat',
+        mapper: (Map<String, Object?> row) => Surat(
+            row['id'] as int?,
+            row['suratId'] as int?,
+            row['nama'] as String?,
+            row['namaLatin'] as String?,
+            row['jumlahAyat'] as String?,
+            row['tempatTurun'] as String?,
+            row['arti'] as String?,
+            row['deskripsi'] as String?,
+            row['audio1'] as String?,
+            row['audio2'] as String?,
+            row['audio3'] as String?,
+            row['audio4'] as String?,
+            row['audio5'] as String?,
+            _dateTimeConverter.decode(row['timestamp'] as int)));
+  }
+
+  @override
+  Future<List<String>> findAllSuratName() async {
+    return _queryAdapter.queryList('SELECT name FROM Surat',
+        mapper: (Map<String, Object?> row) => row.values.first as String);
+  }
+
+  @override
+  Future<Surat?> findSuratById(int id) async {
+    return _queryAdapter.query('SELECT * FROM Surat WHERE id = ?1',
+        mapper: (Map<String, Object?> row) => Surat(
+            row['id'] as int?,
+            row['suratId'] as int?,
+            row['nama'] as String?,
+            row['namaLatin'] as String?,
+            row['jumlahAyat'] as String?,
+            row['tempatTurun'] as String?,
+            row['arti'] as String?,
+            row['deskripsi'] as String?,
+            row['audio1'] as String?,
+            row['audio2'] as String?,
+            row['audio3'] as String?,
+            row['audio4'] as String?,
+            row['audio5'] as String?,
+            _dateTimeConverter.decode(row['timestamp'] as int)),
+        arguments: [id]);
+  }
+
+  @override
+  Future<int> insertSurat(Surat ayat) {
+    return _suratInsertionAdapter.insertAndReturnId(
+        ayat, OnConflictStrategy.replace);
+  }
+
+  @override
+  Future<List<int>> insertSurats(List<Surat> ayats) {
+    return _suratInsertionAdapter.insertListAndReturnIds(
+        ayats, OnConflictStrategy.replace);
   }
 }
 
@@ -396,99 +489,6 @@ class _$RiwayatDao extends RiwayatDao {
   @override
   Future<List<int>> insertRiwayats(List<Riwayat> ayats) {
     return _riwayatInsertionAdapter.insertListAndReturnIds(
-        ayats, OnConflictStrategy.replace);
-  }
-}
-
-class _$SuratDao extends SuratDao {
-  _$SuratDao(
-    this.database,
-    this.changeListener,
-  )   : _queryAdapter = QueryAdapter(database),
-        _suratInsertionAdapter = InsertionAdapter(
-            database,
-            'Surat',
-            (Surat item) => <String, Object?>{
-                  'id': item.id,
-                  'suratId': item.suratId,
-                  'nama': item.nama,
-                  'namaLatin': item.namaLatin,
-                  'jumlahAyat': item.jumlahAyat,
-                  'tempatTurun': item.tempatTurun,
-                  'arti': item.arti,
-                  'deskripsi': item.deskripsi,
-                  'audio1': item.audio1,
-                  'audio2': item.audio2,
-                  'audio3': item.audio3,
-                  'audio4': item.audio4,
-                  'audio5': item.audio5,
-                  'timestamp': _dateTimeConverter.encode(item.timestamp)
-                });
-
-  final sqflite.DatabaseExecutor database;
-
-  final StreamController<String> changeListener;
-
-  final QueryAdapter _queryAdapter;
-
-  final InsertionAdapter<Surat> _suratInsertionAdapter;
-
-  @override
-  Future<List<Surat>> findAllSurat() async {
-    return _queryAdapter.queryList('SELECT * FROM Surat',
-        mapper: (Map<String, Object?> row) => Surat(
-            row['id'] as int?,
-            row['suratId'] as int?,
-            row['nama'] as String?,
-            row['namaLatin'] as String?,
-            row['jumlahAyat'] as String?,
-            row['tempatTurun'] as String?,
-            row['arti'] as String?,
-            row['deskripsi'] as String?,
-            row['audio1'] as String?,
-            row['audio2'] as String?,
-            row['audio3'] as String?,
-            row['audio4'] as String?,
-            row['audio5'] as String?,
-            _dateTimeConverter.decode(row['timestamp'] as int)));
-  }
-
-  @override
-  Future<List<String>> findAllSuratName() async {
-    return _queryAdapter.queryList('SELECT name FROM Surat',
-        mapper: (Map<String, Object?> row) => row.values.first as String);
-  }
-
-  @override
-  Future<Surat?> findSuratById(int id) async {
-    return _queryAdapter.query('SELECT * FROM Surat WHERE id = ?1',
-        mapper: (Map<String, Object?> row) => Surat(
-            row['id'] as int?,
-            row['suratId'] as int?,
-            row['nama'] as String?,
-            row['namaLatin'] as String?,
-            row['jumlahAyat'] as String?,
-            row['tempatTurun'] as String?,
-            row['arti'] as String?,
-            row['deskripsi'] as String?,
-            row['audio1'] as String?,
-            row['audio2'] as String?,
-            row['audio3'] as String?,
-            row['audio4'] as String?,
-            row['audio5'] as String?,
-            _dateTimeConverter.decode(row['timestamp'] as int)),
-        arguments: [id]);
-  }
-
-  @override
-  Future<int> insertSurat(Surat ayat) {
-    return _suratInsertionAdapter.insertAndReturnId(
-        ayat, OnConflictStrategy.replace);
-  }
-
-  @override
-  Future<List<int>> insertSurats(List<Surat> ayats) {
-    return _suratInsertionAdapter.insertListAndReturnIds(
         ayats, OnConflictStrategy.replace);
   }
 }

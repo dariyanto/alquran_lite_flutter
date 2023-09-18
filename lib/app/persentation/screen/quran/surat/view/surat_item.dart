@@ -1,10 +1,11 @@
+import 'package:alquran_lite_flutter/app/domain/model/surat_model.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class SuratItem extends StatelessWidget {
-  final data;
-  final onTap;
-  const SuratItem({super.key, this.data, this.onTap});
+  final SuratModel data;
+  final Function onTap;
+  const SuratItem({super.key,required this.data,required this.onTap});
 
   @override
   Widget build(BuildContext context) {

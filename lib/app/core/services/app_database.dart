@@ -23,10 +23,10 @@ part 'app_database.g.dart'; // the generated code will be there
     version: 1, entities: [Ayat, Bookmark, Riwayat, Surat, Tafsir, Statistik])
 @TypeConverters([DateTimeConverter])
 abstract class AppDatabase extends FloorDatabase {
+  SuratDao get suratDao;
   AyatDao get ayatDao;
   BookmarkDao get bookmarkDao;
   RiwayatDao get riwayatDao;
-  SuratDao get suratDao;
   TafsirDao get tafsirDao;
   StatistikDao get statistikDao;
 }

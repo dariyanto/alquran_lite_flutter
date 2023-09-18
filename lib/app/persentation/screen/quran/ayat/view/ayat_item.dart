@@ -1,10 +1,11 @@
+import 'package:alquran_lite_flutter/app/domain/model/ayat_model.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AyatItem extends StatelessWidget {
-  final data;
-  final onTap;
-  const AyatItem({super.key, this.data,this.onTap});
+  final AyatModel data;
+  final Function onTap;
+  const AyatItem({super.key, required this.data,required this.onTap});
 
   @override
   Widget build(BuildContext context) {
