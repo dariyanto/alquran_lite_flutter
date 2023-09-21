@@ -1,6 +1,7 @@
-import '../../../../../domain/model/surat_model.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import '../../../../../domain/model/surat_model.dart';
 
 class SuratItem extends StatelessWidget {
   final SuratModel data;

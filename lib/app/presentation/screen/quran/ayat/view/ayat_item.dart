@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../../../domain/model/ayat_model.dart';
+import '../bloc/ayat_bloc.dart';
 
 class AyatItem extends StatelessWidget {
   final AyatModel data;
   final Function onTap;
-  const AyatItem({super.key, required this.data,required this.onTap});
+  const AyatItem({super.key, required this.data, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +62,11 @@ class AyatItem extends StatelessWidget {
                           ),
                         ),
                         IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            context.read<AyatBloc>().add(ToggleAyatBookmarkRequested(
+                                suratId: data.suratId.toString(),
+                                ayatId: data.ayatId.toString()));
+                          },
                           icon: const Icon(
                             Icons.favorite_border,
                             color: Colors.blueGrey,

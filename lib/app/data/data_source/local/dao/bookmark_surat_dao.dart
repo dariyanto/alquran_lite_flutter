@@ -13,12 +13,14 @@ abstract class BookmarkSuratDao {
   @Query('SELECT * FROM BookmarkSurat WHERE id = :id')
   Future<BookmarkSurat?> findBookmarkById(int id);
 
+  @Query('SELECT EXISTS(SELECT * FROM BookmarkSurat WHERE suratId = :suratId)')
+  Future<bool> isBookmark(int suratId);
+
   @Insert(onConflict: OnConflictStrategy.replace)
   Future<int> insertBookmark(BookmarkSurat ayat);
 
-
-  @Query('DELETE FROM BookmarkSurat WHERE suratId = :suratId AND ayatId = :ayatId')
-  Future<void> deleteBookmarkBySuratIdAndAyatId(int suratId, int ayatId);
+  @Query('DELETE FROM BookmarkSurat WHERE suratId = :suratId')
+  Future<void> deleteBookmarkBySuratIdAndAyatId(int suratId);
 
   @Query('DELETE FROM BookmarkSurat')
   Future<void> deleteAllBookmark();

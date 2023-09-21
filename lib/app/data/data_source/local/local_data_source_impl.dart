@@ -63,6 +63,11 @@ class LocalDataSourceImpl extends LocalDataSource {
   }
 
   @override
+  Future<bool> isBookmarkAyat(int suratId, int ayatId) async {
+    return await db.bookmarkAyatDao.isBookmark(suratId, ayatId);
+  }
+
+  @override
   Future<void> insertBookmarkAyat(int suratId, int ayatId) async {
     var bookmark = BookmarkAyat.optional(suratId: suratId, ayatId: ayatId);
     await db.bookmarkAyatDao.insertBookmark(bookmark);
@@ -84,8 +89,13 @@ class LocalDataSourceImpl extends LocalDataSource {
   }
 
   @override
-  Future<void> insertBookmarkSurat(int suratId, int ayatId) async {
-    var bookmark = BookmarkSurat.optional(suratId: suratId, ayatId: ayatId);
+  Future<bool> isBookmarkSurat(int suratId) async {
+    return await db.bookmarkSuratDao.isBookmark(suratId);
+  }
+
+  @override
+  Future<void> insertBookmarkSurat(int suratId) async {
+    var bookmark = BookmarkSurat.optional(suratId: suratId);
     await db.bookmarkSuratDao.insertBookmark(bookmark);
   }
 
@@ -95,8 +105,8 @@ class LocalDataSourceImpl extends LocalDataSource {
   }
 
   @override
-  Future<void> deleteBookmarkSurat(int suratId, int ayatId) async {
-    return await db.bookmarkSuratDao.deleteBookmarkBySuratIdAndAyatId(suratId, ayatId);
+  Future<void> deleteBookmarkSurat(int suratId) async {
+    return await db.bookmarkSuratDao.deleteBookmarkBySuratIdAndAyatId(suratId);
   }
 
   @override

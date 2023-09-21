@@ -13,9 +13,10 @@ class AyatView extends StatelessWidget {
   Widget build(BuildContext context) {
     var ayatBloc = sl<AyatBloc>();
     return BlocProvider(
-      create: (context) => ayatBloc..add(AyatFetchRequested(
+      create: (context) => ayatBloc
+        ..add(AyatFetchRequested(
           suratId: suratId,
-      )),
+        )),
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Ayat'),
@@ -23,7 +24,11 @@ class AyatView extends StatelessWidget {
           actions: [
             // favorite button
             IconButton(
-              onPressed: () async {},
+              onPressed: () async {
+                context.read<AyatBloc>().add(ToggleSuratBookmarkRequested(
+                      suratId: suratId,
+                    ));
+              },
               icon: const Icon(Icons.favorite_outline),
             ),
             IconButton(

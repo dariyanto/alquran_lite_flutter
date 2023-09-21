@@ -13,4 +13,6 @@ abstract class AppRepository {
   Future<Either<Failure, List<TafsirModel>>> getTafsir(int suratId);
   Future<Either<Failure, TafsirModel>> getTafsirById(int id);
   Future<Either<Failure, TafsirModel>> getTafsirBySuratAyat(int suratId, int ayatId);
+  Future<Either<Failure, void>> toggleBookmarkAyat(int suratId, int ayatId);
+  Future<Either<Failure, void>> toogleBookmarkSurat(int suratId);
 }

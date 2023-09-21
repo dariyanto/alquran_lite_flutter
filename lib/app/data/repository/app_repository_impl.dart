@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:dartz/dartz.dart';
 
 import '../../core/error/exceptions.dart';
@@ -136,6 +138,35 @@ class AppRepositoryImpl extends AppRepository {
       return Right(entities.toModel());
     } else {
       return const Left(NoDataFailure(message: "Data tidak ditemukan"));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> toggleBookmarkAyat(
+      int suratId, int ayatId) async {
+    try {
+      if (await localDataSource.isBookmarkAyat(suratId, ayatId)) {
+        await localDataSource.deleteBookmarkAyat(suratId, ayatId);
+      } else {
+        await localDataSource.insertBookmarkAyat(suratId, ayatId);
+      }
+      return const Right(null);
+    } catch (e) {
+      return Left(CacheFailure(message: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> toogleBookmarkSurat(int suratId) async {
+    try {
+      if (await localDataSource.isBookmarkSurat(suratId)) {
+        await localDataSource.deleteBookmarkSurat(suratId);
+      } else {
+        await localDataSource.insertBookmarkSurat(suratId);
+      }
+      return const Right(null);
+    } catch (e) {
+      return Left(CacheFailure(message: e.toString()));
     }
   }
 }

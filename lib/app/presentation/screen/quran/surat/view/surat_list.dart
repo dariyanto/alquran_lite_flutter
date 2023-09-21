@@ -1,11 +1,10 @@
-import '../../../../../domain/model/surat_model.dart';
-
-import 'surat_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../../domain/model/surat_model.dart';
 import '../bloc/surat_bloc.dart';
+import 'surat_item.dart';
 
 class SuratList extends StatelessWidget {
   const SuratList({super.key});
