@@ -1,5 +1,4 @@
 import '../../../../../core/di/service_locator.dart';
-import '../../../../../domain/repository/app_repository.dart';
 import '../bloc/surat_bloc.dart';
 import 'surat_list.dart';
 import 'package:flutter/material.dart';
@@ -10,16 +9,14 @@ class SuratView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var repository = sl<AppRepository>();
+    var suratBloc = sl<SuratBloc>();
     return Scaffold(
       appBar: AppBar(
         title: const Text('Al-Qur\'an Lite Flutter'),
         centerTitle: true,
       ),
       body: BlocProvider(
-        create: (context) => SuratBloc(
-          repository,
-        )..add(
+        create: (context) => suratBloc..add(
             const SuratFetchRequested(),
           ),
         child: const SuratList(),

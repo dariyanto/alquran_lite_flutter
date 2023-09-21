@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../core/di/service_locator.dart';
-import '../../../../../domain/repository/app_repository.dart';
 import 'ayat_list.dart';
 
 class AyatView extends StatelessWidget {
@@ -12,11 +11,9 @@ class AyatView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var repository = sl<AppRepository>();
+    var ayatBloc = sl<AyatBloc>();
     return BlocProvider(
-      create: (context) => AyatBloc(
-        repository,
-      )..add(AyatFetchRequested(
+      create: (context) => ayatBloc..add(AyatFetchRequested(
           suratId: suratId,
       )),
       child: Scaffold(
