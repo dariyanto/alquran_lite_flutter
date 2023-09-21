@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:pretty_http_logger/pretty_http_logger.dart';
 
 import '../../../core/error/exceptions.dart';
@@ -20,7 +21,10 @@ class RemoteDataSourceImpl implements RemoteDataSource {
     if (res.statusCode != 200) {
       throw ServerException(message: res.body);
     }
-    return SuratResponse.fromJson(jsonDecode(res.body));
+
+    return compute((body) {
+      return SuratResponse.fromJson(jsonDecode(body));
+    }, res.body);
   }
 
   @override
@@ -29,7 +33,10 @@ class RemoteDataSourceImpl implements RemoteDataSource {
     if (res.statusCode != 200) {
       throw ServerException(message: res.body);
     }
-    return AyatResponse.fromJson(jsonDecode(res.body));
+
+    return compute((body) {
+      return AyatResponse.fromJson(jsonDecode(body));
+    }, res.body);
   }
 
   @override
@@ -38,6 +45,9 @@ class RemoteDataSourceImpl implements RemoteDataSource {
     if (res.statusCode != 200) {
       throw ServerException(message: res.body);
     }
-    return TafsirResponse.fromJson(jsonDecode(res.body));
+    
+    return compute((body) {
+      return TafsirResponse.fromJson(jsonDecode(body));
+    }, res.body);
   }
 }

@@ -1,4 +1,4 @@
-import 'package:alquran_lite_flutter/app/domain/model/surat_model.dart';
+import '../../../../../domain/model/surat_model.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 

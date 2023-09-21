@@ -1,6 +1,6 @@
-
 import 'model/ayat_entity.dart';
-import 'model/bookmark_entity.dart';
+import 'model/bookmark_ayat_entity.dart';
+import 'model/bookmark_surat_entity.dart';
 import 'model/riwayat_entity.dart';
 import 'model/surat_entity.dart';
 import 'model/tafsir_entity.dart';
@@ -19,12 +19,17 @@ abstract class LocalDataSource {
   Future<void> insertTafsir(List<Tafsir> tafsir);
   Future<Tafsir?> getTafsirBySuratAyat(int suratId, int ayatId);
 
-  Future<void> insertBookmark(int suratId, int ayatId);
-  Future<List<Bookmark>> getBookmark();
-  Future<void> deleteBookmark(int suratId, int ayatId);
-  Future<void> deleteAllBookmark();
+  Future<void> insertBookmarkAyat(int suratId, int ayatId);
+  Future<List<BookmarkAyat>> getBookmarkAyat();
+  Future<void> deleteBookmarkAyat(int suratId, int ayatId);
+  Future<void> deleteAllBookmarkAyat();
 
-  Future<void> insertRiwayat(int suratId,int ayatId);
+  Future<void> insertBookmarkSurat(int suratId, int ayatId);
+  Future<List<BookmarkSurat>> getBookmarkSurat();
+  Future<void> deleteBookmarkSurat(int suratId, int ayatId);
+  Future<void> deleteAllBookmarkSurat();
+
+  Future<void> insertRiwayat(int suratId, int ayatId);
   Future<List<Riwayat>> getRiwayat();
   Future<void> deleteRiwayat(int suratId, int ayatId);
   Future<void> deleteAllRiwayat();

@@ -1,25 +1,28 @@
 import 'package:floor/floor.dart';
 
 @entity
-class Bookmark {
+class BookmarkSurat {
   @PrimaryKey(autoGenerate: true)
   final int? id;
   final int? suratId;
   final int? ayatId;
+  final int? userId;
   final DateTime timestamp;
 
-  Bookmark(this.id, this.suratId, this.ayatId,this.timestamp);
+  BookmarkSurat(this.id, this.suratId, this.ayatId, this.userId, this.timestamp);
 
-  factory Bookmark.optional({
+  factory BookmarkSurat.optional({
     int? id,
     int? suratId,
     int? ayatId,
+    int? userId,
     DateTime? timestamp,
   }) {
-    return Bookmark(
+    return BookmarkSurat(
       id,
       suratId,
       ayatId,
+      userId,
       timestamp ?? DateTime.now(),
     );
   }

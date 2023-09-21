@@ -1,8 +1,9 @@
-import 'package:alquran_lite_flutter/app/core/services/app_database.dart';
+import '../../../core/services/app_database.dart';
 
 import 'local_data_source.dart';
 import 'model/ayat_entity.dart';
-import 'model/bookmark_entity.dart';
+import 'model/bookmark_ayat_entity.dart';
+import 'model/bookmark_surat_entity.dart';
 import 'model/riwayat_entity.dart';
 import 'model/surat_entity.dart';
 import 'model/tafsir_entity.dart';
@@ -62,24 +63,45 @@ class LocalDataSourceImpl extends LocalDataSource {
   }
 
   @override
-  Future<void> insertBookmark(int suratId, int ayatId) async {
-    var bookmark = Bookmark.optional(suratId: suratId, ayatId: ayatId);
-    await db.bookmarkDao.insertBookmark(bookmark);
+  Future<void> insertBookmarkAyat(int suratId, int ayatId) async {
+    var bookmark = BookmarkAyat.optional(suratId: suratId, ayatId: ayatId);
+    await db.bookmarkAyatDao.insertBookmark(bookmark);
   }
 
   @override
-  Future<List<Bookmark>> getBookmark() async {
-    return await db.bookmarkDao.findAllBookmark();
+  Future<List<BookmarkAyat>> getBookmarkAyat() async {
+    return await db.bookmarkAyatDao.findAllBookmark();
   }
 
   @override
-  Future<void> deleteBookmark(int suratId, int ayatId) async {
-    return await db.bookmarkDao.deleteBookmarkBySuratIdAndAyatId(suratId, ayatId);
+  Future<void> deleteBookmarkAyat(int suratId, int ayatId) async {
+    return await db.bookmarkAyatDao.deleteBookmarkBySuratIdAndAyatId(suratId, ayatId);
   }
 
   @override
-  Future<void> deleteAllBookmark() async {
-    return await db.bookmarkDao.deleteAllBookmark();
+  Future<void> deleteAllBookmarkAyat() async {
+    return await db.bookmarkAyatDao.deleteAllBookmark();
+  }
+
+  @override
+  Future<void> insertBookmarkSurat(int suratId, int ayatId) async {
+    var bookmark = BookmarkSurat.optional(suratId: suratId, ayatId: ayatId);
+    await db.bookmarkSuratDao.insertBookmark(bookmark);
+  }
+
+  @override
+  Future<List<BookmarkSurat>> getBookmarkSurat() async {
+    return await db.bookmarkSuratDao.findAllBookmark();
+  }
+
+  @override
+  Future<void> deleteBookmarkSurat(int suratId, int ayatId) async {
+    return await db.bookmarkSuratDao.deleteBookmarkBySuratIdAndAyatId(suratId, ayatId);
+  }
+
+  @override
+  Future<void> deleteAllBookmarkSurat() async {
+    return await db.bookmarkSuratDao.deleteAllBookmark();
   }
 
   @override

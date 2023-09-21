@@ -1,7 +1,7 @@
-import '../../../../../domain/model/ayat_model.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
+import '../../../../../domain/model/ayat_model.dart';
 import '../../../../../domain/repository/app_repository.dart';
 
 part 'ayat_event.dart';
