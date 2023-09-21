@@ -1,3 +1,5 @@
+import 'package:alquran_lite_flutter/app/data/data_source/local/model/statistik_entity.dart';
+
 import 'model/ayat_entity.dart';
 import 'model/bookmark_ayat_entity.dart';
 import 'model/bookmark_surat_entity.dart';
@@ -35,4 +37,9 @@ abstract class LocalDataSource {
   Future<List<Riwayat>> getRiwayat();
   Future<void> deleteRiwayat(int suratId, int ayatId);
   Future<void> deleteAllRiwayat();
+
+  Future<void> insertStatistik(int suratId, int ayatId);
+  Future<List<Statistik>> getStatistik();
+  Future<void> deleteStatistik(int suratId, int ayatId);
+  Future<void> deleteAllStatistik();
 }

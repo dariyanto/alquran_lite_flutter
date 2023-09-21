@@ -48,16 +48,13 @@ class AyatItem extends StatelessWidget {
                           ),
                         ),
                         IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            context.read<AyatBloc>().add(ToggleAyatBookmarkRequested(
+                                suratId: data.suratId.toString(),
+                                ayatId: data.ayatId.toString()));
+                          },
                           icon: const Icon(
-                            Icons.share,
-                            color: Colors.blueGrey,
-                          ),
-                        ),
-                        IconButton(
-                          onPressed: () {},
-                          icon: const Icon(
-                            Icons.copy,
+                            Icons.bookmark_add_outlined,
                             color: Colors.blueGrey,
                           ),
                         ),

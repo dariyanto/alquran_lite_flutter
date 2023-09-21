@@ -7,9 +7,6 @@ abstract class AyatDao {
   @Query('SELECT * FROM Ayat')
   Future<List<Ayat>> findAllAyat();
 
-  @Query('SELECT name FROM Ayat')
-  Future<List<String>> findAllAyatName();
-
   @Query('SELECT * FROM Ayat WHERE id = :id')
   Future<Ayat?> findAyatById(int id);
 

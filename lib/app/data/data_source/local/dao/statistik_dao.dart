@@ -7,9 +7,6 @@ abstract class StatistikDao {
   @Query('SELECT * FROM Statistik')
   Future<List<Statistik>> findAllStatistik();
 
-  @Query('SELECT name FROM Statistik')
-  Future<List<String>> findAllStatistikName();
-
   @Query('SELECT * FROM Statistik WHERE id = :id')
   Future<Statistik?> findStatistikById(int id);
 

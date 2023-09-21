@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:dartz/dartz.dart';
 
 import '../../core/error/exceptions.dart';
@@ -142,7 +140,7 @@ class AppRepositoryImpl extends AppRepository {
   }
 
   @override
-  Future<Either<Failure, void>> toggleBookmarkAyat(
+  Future<Either<Failure, bool>> toggleBookmarkAyat(
       int suratId, int ayatId) async {
     try {
       if (await localDataSource.isBookmarkAyat(suratId, ayatId)) {
@@ -150,21 +148,32 @@ class AppRepositoryImpl extends AppRepository {
       } else {
         await localDataSource.insertBookmarkAyat(suratId, ayatId);
       }
-      return const Right(null);
+      return const Right(true);
     } catch (e) {
       return Left(CacheFailure(message: e.toString()));
     }
   }
 
   @override
-  Future<Either<Failure, void>> toogleBookmarkSurat(int suratId) async {
+  Future<Either<Failure, bool>> toogleBookmarkSurat(int suratId) async {
     try {
       if (await localDataSource.isBookmarkSurat(suratId)) {
         await localDataSource.deleteBookmarkSurat(suratId);
       } else {
         await localDataSource.insertBookmarkSurat(suratId);
       }
-      return const Right(null);
+      return const Right(true);
+    } catch (e) {
+      return Left(CacheFailure(message: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, bool>> markLastRead(int suratId, int ayatId) async {
+    try {
+      await localDataSource.insertRiwayat(suratId, ayatId);
+      await localDataSource.insertStatistik(suratId, ayatId);
+      return const Right(true);
     } catch (e) {
       return Left(CacheFailure(message: e.toString()));
     }

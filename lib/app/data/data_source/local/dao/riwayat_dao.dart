@@ -7,9 +7,6 @@ abstract class RiwayatDao {
   @Query('SELECT * FROM Riwayat')
   Future<List<Riwayat>> findAllRiwayat();
 
-  @Query('SELECT name FROM Riwayat')
-  Future<List<String>> findAllRiwayatName();
-
   @Query('SELECT * FROM Riwayat WHERE id = :id')
   Future<Riwayat?> findRiwayatById(int id);
 

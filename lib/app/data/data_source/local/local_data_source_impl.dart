@@ -1,3 +1,5 @@
+import 'package:alquran_lite_flutter/app/data/data_source/local/model/statistik_entity.dart';
+
 import '../../../core/services/app_database.dart';
 
 import 'local_data_source.dart';
@@ -64,7 +66,7 @@ class LocalDataSourceImpl extends LocalDataSource {
 
   @override
   Future<bool> isBookmarkAyat(int suratId, int ayatId) async {
-    return await db.bookmarkAyatDao.isBookmark(suratId, ayatId);
+    return await db.bookmarkAyatDao.isBookmark(suratId, ayatId) ?? false;
   }
 
   @override
@@ -90,7 +92,7 @@ class LocalDataSourceImpl extends LocalDataSource {
 
   @override
   Future<bool> isBookmarkSurat(int suratId) async {
-    return await db.bookmarkSuratDao.isBookmark(suratId);
+    return await db.bookmarkSuratDao.isBookmark(suratId) ?? false;
   }
 
   @override
@@ -117,7 +119,7 @@ class LocalDataSourceImpl extends LocalDataSource {
   @override
   Future<void> insertRiwayat(int suratId, int ayatId) async {
     var riwayat = Riwayat.optional(suratId: suratId, ayatId: ayatId);
-    await db.riwayatDao.insertRiwayat(riwayat); 
+    await db.riwayatDao.insertRiwayat(riwayat);
   }
 
   @override
@@ -133,5 +135,26 @@ class LocalDataSourceImpl extends LocalDataSource {
   @override
   Future<void> deleteAllRiwayat() async {
     return await db.riwayatDao.deleteAllRiwayat();
+  }
+
+  @override
+  Future<void> insertStatistik(int suratId, int ayatId) async {
+    var statistik = Statistik.optional(suratId: suratId, ayatId: ayatId);
+    await db.statistikDao.insertStatistik(statistik);
+  }
+
+  @override
+  Future<List<Statistik>> getStatistik() async {
+    return await db.statistikDao.findAllStatistik();
+  }
+
+  @override
+  Future<void> deleteStatistik(int suratId, int ayatId) async {
+    return await db.statistikDao.deleteStatistikBySuratIdAndAyatId(suratId, ayatId);
+  }
+
+  @override
+  Future<void> deleteAllStatistik() async {
+    return await db.statistikDao.deleteAllStatistik();
   }
 }

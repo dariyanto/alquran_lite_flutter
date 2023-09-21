@@ -7,9 +7,6 @@ abstract class TafsirDao {
   @Query('SELECT * FROM Tafsir')
   Future<List<Tafsir>> findAllTafsir();
 
-  @Query('SELECT name FROM Tafsir')
-  Future<List<String>> findAllTafsirName();
-
   @Query('SELECT * FROM Tafsir WHERE id = :id')
   Future<Tafsir?> findTafsirById(int id);
 

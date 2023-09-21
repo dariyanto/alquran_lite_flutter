@@ -18,6 +18,8 @@ class AyatBloc extends Bloc<AyatEvent, AyatState> {
         await _mapToggleAyatBookmarkRequestedToState(event, emit);
       } else if (event is ToggleSuratBookmarkRequested) {
         await _mapToggleSuratBookmarkRequestedToState(event, emit);
+      } else if (event is InsertRiwayatAyatRequested) {
+        await _mapInsertRiwayatAyatRequestedToState(event, emit);
       }
     });
   }
@@ -37,7 +39,7 @@ class AyatBloc extends Bloc<AyatEvent, AyatState> {
     var res = await repository.toggleBookmarkAyat(
         int.parse(event.suratId), int.parse(event.ayatId));
     res.fold((l) {
-      emit(AyatError(l.message));
+      // emit(AyatError(l.message));
     }, (r) {
       // emit(AyatLoaded(r));
     });
@@ -47,7 +49,18 @@ class AyatBloc extends Bloc<AyatEvent, AyatState> {
       ToggleSuratBookmarkRequested event, Emitter<AyatState> emit) async {
     var res = await repository.toogleBookmarkSurat(int.parse(event.suratId));
     res.fold((l) {
-      emit(AyatError(l.message));
+      // emit(AyatError(l.message));
+    }, (r) {
+      // emit(AyatLoaded(r));
+    });
+  }
+
+  Future<void> _mapInsertRiwayatAyatRequestedToState(
+      InsertRiwayatAyatRequested event, Emitter<AyatState> emit) async {
+    var res = await repository.markLastRead(
+        int.parse(event.suratId), int.parse(event.ayatId));
+    res.fold((l) {
+      // emit(AyatError(l.message));
     }, (r) {
       // emit(AyatLoaded(r));
     });

@@ -32,3 +32,12 @@ class ToggleSuratBookmarkRequested extends AyatEvent {
   @override
   List<Object> get props => [];
 }
+
+class InsertRiwayatAyatRequested extends AyatEvent {
+  final String suratId;
+  final String ayatId;
+  const InsertRiwayatAyatRequested({required this.suratId, required this.ayatId});
+
+  @override
+  List<Object> get props => [];
+}

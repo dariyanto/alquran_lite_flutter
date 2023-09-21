@@ -7,9 +7,6 @@ abstract class SuratDao {
   @Query('SELECT * FROM Surat')
   Future<List<Surat>> findAllSurat();
 
-  @Query('SELECT name FROM Surat')
-  Future<List<String>> findAllSuratName();
-
   @Query('SELECT * FROM Surat WHERE id = :id')
   Future<Surat?> findSuratById(int id);
 
