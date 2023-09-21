@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+
 import '../network/network_info.dart';
 import '../../data/repository/app_repository_impl.dart';
 import '../../domain/repository/app_repository.dart';
@@ -21,7 +23,7 @@ Future<void> initServiceLocator() async {
       () => NetworkInfoImpl(connectionChecker: sl()));
 
   HttpWithMiddleware http = HttpWithMiddleware.build(middlewares: [
-    HttpLogger(logLevel: LogLevel.BODY),
+    HttpLogger(logLevel: kReleaseMode ? LogLevel.NONE : LogLevel.BODY ),
   ]);
 
   sl.registerLazySingleton(() => http);
