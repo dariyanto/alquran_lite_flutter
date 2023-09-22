@@ -140,14 +140,10 @@ class AppRepositoryImpl extends AppRepository {
   }
 
   @override
-  Future<Either<Failure, bool>> toggleBookmarkAyat(
+  Future<Either<Failure, bool>> insertBookmarkAyat(
       int suratId, int ayatId) async {
     try {
-      if (await localDataSource.isBookmarkAyat(suratId, ayatId)) {
-        await localDataSource.deleteBookmarkAyat(suratId, ayatId);
-      } else {
-        await localDataSource.insertBookmarkAyat(suratId, ayatId);
-      }
+      await localDataSource.insertBookmarkAyat(suratId, ayatId);
       return const Right(true);
     } catch (e) {
       return Left(CacheFailure(message: e.toString()));
@@ -155,13 +151,9 @@ class AppRepositoryImpl extends AppRepository {
   }
 
   @override
-  Future<Either<Failure, bool>> toogleBookmarkSurat(int suratId) async {
+  Future<Either<Failure, bool>> insertBookmarkSurat(int suratId) async {
     try {
-      if (await localDataSource.isBookmarkSurat(suratId)) {
-        await localDataSource.deleteBookmarkSurat(suratId);
-      } else {
-        await localDataSource.insertBookmarkSurat(suratId);
-      }
+      await localDataSource.insertBookmarkSurat(suratId);
       return const Right(true);
     } catch (e) {
       return Left(CacheFailure(message: e.toString()));
@@ -169,7 +161,8 @@ class AppRepositoryImpl extends AppRepository {
   }
 
   @override
-  Future<Either<Failure, bool>> markLastRead(int suratId, int ayatId) async {
+  Future<Either<Failure, bool>> insertRiwayatAyat(
+      int suratId, int ayatId) async {
     try {
       await localDataSource.insertRiwayat(suratId, ayatId);
       await localDataSource.insertStatistik(suratId, ayatId);

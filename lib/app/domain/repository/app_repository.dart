@@ -13,8 +13,7 @@ abstract class AppRepository {
   Future<Either<Failure, List<TafsirModel>>> getTafsir(int suratId);
   Future<Either<Failure, TafsirModel>> getTafsirById(int id);
   Future<Either<Failure, TafsirModel>> getTafsirBySuratAyat(int suratId, int ayatId);
-  Future<Either<Failure, bool>> toggleBookmarkAyat(int suratId, int ayatId);
-  Future<Either<Failure, bool>> toogleBookmarkSurat(int suratId);
-  // insert riwayat
-  Future<Either<Failure, bool>> markLastRead(int suratId, int ayatId);
+  Future<Either<Failure, bool>> insertBookmarkAyat(int suratId, int ayatId);
+  Future<Either<Failure, bool>> insertBookmarkSurat(int suratId);
+  Future<Either<Failure, bool>> insertRiwayatAyat(int suratId, int ayatId);
 }

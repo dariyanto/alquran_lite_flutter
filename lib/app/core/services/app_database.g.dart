@@ -99,9 +99,9 @@ class _$AppDatabase extends AppDatabase {
         await database.execute(
             'CREATE TABLE IF NOT EXISTS `Ayat` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `suratId` INTEGER, `ayatId` INTEGER, `teksArab` TEXT, `teksLatin` TEXT, `teksIndonesia` TEXT, `audio1` TEXT, `audio2` TEXT, `audio3` TEXT, `audio4` TEXT, `audio5` TEXT, `timestamp` INTEGER NOT NULL)');
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `BookmarkAyat` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `suratId` INTEGER, `ayatId` INTEGER, `userId` INTEGER, `timestamp` INTEGER NOT NULL)');
+            'CREATE TABLE IF NOT EXISTS `BookmarkAyat` (`suratId` INTEGER, `ayatId` INTEGER, `userId` INTEGER, PRIMARY KEY (`suratId`, `ayatId`, `userId`))');
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `BookmarkSurat` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `suratId` INTEGER, `userId` INTEGER, `timestamp` INTEGER NOT NULL)');
+            'CREATE TABLE IF NOT EXISTS `BookmarkSurat` (`suratId` INTEGER, `userId` INTEGER, PRIMARY KEY (`suratId`, `userId`))');
         await database.execute(
             'CREATE TABLE IF NOT EXISTS `Riwayat` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `suratId` INTEGER, `ayatId` INTEGER, `userId` INTEGER, `timestamp` INTEGER NOT NULL)');
         await database.execute(
@@ -351,11 +351,9 @@ class _$BookmarkAyatDao extends BookmarkAyatDao {
             database,
             'BookmarkAyat',
             (BookmarkAyat item) => <String, Object?>{
-                  'id': item.id,
                   'suratId': item.suratId,
                   'ayatId': item.ayatId,
-                  'userId': item.userId,
-                  'timestamp': _dateTimeConverter.encode(item.timestamp)
+                  'userId': item.userId
                 });
 
   final sqflite.DatabaseExecutor database;
@@ -370,34 +368,19 @@ class _$BookmarkAyatDao extends BookmarkAyatDao {
   Future<List<BookmarkAyat>> findAllBookmark() async {
     return _queryAdapter.queryList('SELECT * FROM BookmarkAyat',
         mapper: (Map<String, Object?> row) => BookmarkAyat(
-            row['id'] as int?,
             row['suratId'] as int?,
             row['ayatId'] as int?,
-            row['userId'] as int?,
-            _dateTimeConverter.decode(row['timestamp'] as int)));
+            row['userId'] as int?));
   }
 
   @override
   Future<BookmarkAyat?> findBookmarkById(int id) async {
     return _queryAdapter.query('SELECT * FROM BookmarkAyat WHERE id = ?1',
         mapper: (Map<String, Object?> row) => BookmarkAyat(
-            row['id'] as int?,
             row['suratId'] as int?,
             row['ayatId'] as int?,
-            row['userId'] as int?,
-            _dateTimeConverter.decode(row['timestamp'] as int)),
+            row['userId'] as int?),
         arguments: [id]);
-  }
-
-  @override
-  Future<bool?> isBookmark(
-    int suratId,
-    int ayatId,
-  ) async {
-    return _queryAdapter.query(
-        'SELECT COUNT(*) FROM BookmarkSurat WHERE suratId = ?1 AND ayatId = ?2 > 0',
-        mapper: (Map<String, Object?> row) => (row.values.first as int) != 0,
-        arguments: [suratId, ayatId]);
   }
 
   @override
@@ -418,7 +401,7 @@ class _$BookmarkAyatDao extends BookmarkAyatDao {
   @override
   Future<int> insertBookmark(BookmarkAyat ayat) {
     return _bookmarkAyatInsertionAdapter.insertAndReturnId(
-        ayat, OnConflictStrategy.replace);
+        ayat, OnConflictStrategy.ignore);
   }
 }
 
@@ -431,10 +414,8 @@ class _$BookmarkSuratDao extends BookmarkSuratDao {
             database,
             'BookmarkSurat',
             (BookmarkSurat item) => <String, Object?>{
-                  'id': item.id,
                   'suratId': item.suratId,
-                  'userId': item.userId,
-                  'timestamp': _dateTimeConverter.encode(item.timestamp)
+                  'userId': item.userId
                 });
 
   final sqflite.DatabaseExecutor database;
@@ -448,30 +429,16 @@ class _$BookmarkSuratDao extends BookmarkSuratDao {
   @override
   Future<List<BookmarkSurat>> findAllBookmark() async {
     return _queryAdapter.queryList('SELECT * FROM BookmarkSurat',
-        mapper: (Map<String, Object?> row) => BookmarkSurat(
-            row['id'] as int?,
-            row['suratId'] as int?,
-            row['userId'] as int?,
-            _dateTimeConverter.decode(row['timestamp'] as int)));
+        mapper: (Map<String, Object?> row) =>
+            BookmarkSurat(row['suratId'] as int?, row['userId'] as int?));
   }
 
   @override
   Future<BookmarkSurat?> findBookmarkById(int id) async {
     return _queryAdapter.query('SELECT * FROM BookmarkSurat WHERE id = ?1',
-        mapper: (Map<String, Object?> row) => BookmarkSurat(
-            row['id'] as int?,
-            row['suratId'] as int?,
-            row['userId'] as int?,
-            _dateTimeConverter.decode(row['timestamp'] as int)),
+        mapper: (Map<String, Object?> row) =>
+            BookmarkSurat(row['suratId'] as int?, row['userId'] as int?),
         arguments: [id]);
-  }
-
-  @override
-  Future<bool?> isBookmark(int suratId) async {
-    return _queryAdapter.query(
-        'SELECT COUNT(*) FROM BookmarkSurat WHERE suratId = ?1 > 0',
-        mapper: (Map<String, Object?> row) => (row.values.first as int) != 0,
-        arguments: [suratId]);
   }
 
   @override
@@ -489,7 +456,7 @@ class _$BookmarkSuratDao extends BookmarkSuratDao {
   @override
   Future<int> insertBookmark(BookmarkSurat ayat) {
     return _bookmarkSuratInsertionAdapter.insertAndReturnId(
-        ayat, OnConflictStrategy.replace);
+        ayat, OnConflictStrategy.ignore);
   }
 }
 
@@ -558,13 +525,13 @@ class _$RiwayatDao extends RiwayatDao {
   @override
   Future<int> insertRiwayat(Riwayat ayat) {
     return _riwayatInsertionAdapter.insertAndReturnId(
-        ayat, OnConflictStrategy.replace);
+        ayat, OnConflictStrategy.abort);
   }
 
   @override
   Future<List<int>> insertRiwayats(List<Riwayat> ayats) {
     return _riwayatInsertionAdapter.insertListAndReturnIds(
-        ayats, OnConflictStrategy.replace);
+        ayats, OnConflictStrategy.abort);
   }
 }
 
@@ -721,7 +688,7 @@ class _$StatistikDao extends StatistikDao {
   @override
   Future<int> insertStatistik(Statistik ayat) {
     return _statistikInsertionAdapter.insertAndReturnId(
-        ayat, OnConflictStrategy.replace);
+        ayat, OnConflictStrategy.abort);
   }
 }
 

@@ -12,7 +12,7 @@ final router = GoRouter(
     GoRoute(
       path: '/:suratId',
       builder: (context, state) => AyatView(
-        suratId: state.pathParameters['suratId']!,
+        suratId: int.parse(state.pathParameters['suratId']!)
       ),
     ),
   ],

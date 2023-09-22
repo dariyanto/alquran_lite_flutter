@@ -21,13 +21,11 @@ abstract class LocalDataSource {
   Future<void> insertTafsir(List<Tafsir> tafsir);
   Future<Tafsir?> getTafsirBySuratAyat(int suratId, int ayatId);
 
-  Future<bool> isBookmarkAyat(int suratId, int ayatId);
   Future<void> insertBookmarkAyat(int suratId, int ayatId);
   Future<List<BookmarkAyat>> getBookmarkAyat();
   Future<void> deleteBookmarkAyat(int suratId, int ayatId);
   Future<void> deleteAllBookmarkAyat();
 
-  Future<bool> isBookmarkSurat(int suratId);
   Future<void> insertBookmarkSurat(int suratId);
   Future<List<BookmarkSurat>> getBookmarkSurat();
   Future<void> deleteBookmarkSurat(int suratId);

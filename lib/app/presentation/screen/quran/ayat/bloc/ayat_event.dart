@@ -8,34 +8,34 @@ sealed class AyatEvent extends Equatable {
 }
 
 
-class AyatFetchRequested extends AyatEvent {
-  final String suratId;
-  const AyatFetchRequested({required this.suratId});
+class FetchAyatRequested extends AyatEvent {
+  final int suratId;
+  const FetchAyatRequested({required this.suratId});
 
   @override
   List<Object> get props => [];
 }
 
-class ToggleAyatBookmarkRequested extends AyatEvent {
-  final String suratId;
-  final String ayatId;
-  const ToggleAyatBookmarkRequested({required this.suratId, required this.ayatId});
+class InsertBookmarkAyatRequested extends AyatEvent {
+  final int suratId;
+  final int ayatId;
+  const InsertBookmarkAyatRequested({required this.suratId, required this.ayatId});
 
   @override
   List<Object> get props => [];
 }
 
-class ToggleSuratBookmarkRequested extends AyatEvent {
-  final String suratId;
-  const ToggleSuratBookmarkRequested({required this.suratId});
+class InsertBookmarkSuratRequested extends AyatEvent {
+  final int suratId;
+  const InsertBookmarkSuratRequested({required this.suratId});
 
   @override
   List<Object> get props => [];
 }
 
 class InsertRiwayatAyatRequested extends AyatEvent {
-  final String suratId;
-  final String ayatId;
+  final int suratId;
+  final int ayatId;
   const InsertRiwayatAyatRequested({required this.suratId, required this.ayatId});
 
   @override

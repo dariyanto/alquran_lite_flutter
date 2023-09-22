@@ -6,15 +6,14 @@ import '../bloc/ayat_bloc.dart';
 import 'ayat_list.dart';
 
 class AyatView extends StatelessWidget {
-  final String suratId;
+  final int suratId;
   const AyatView({super.key, required this.suratId});
 
   @override
   Widget build(BuildContext context) {
-    var ayatBloc = sl<AyatBloc>();
     return BlocProvider(
-      create: (context) => ayatBloc
-        ..add(AyatFetchRequested(
+      create: (context) => sl<AyatBloc>()
+        ..add(FetchAyatRequested(
           suratId: suratId,
         )),
       child: Scaffold(
@@ -25,7 +24,7 @@ class AyatView extends StatelessWidget {
             // favorite button
             IconButton(
               onPressed: () async {
-                context.read<AyatBloc>().add(ToggleSuratBookmarkRequested(
+                sl<AyatBloc>().add(InsertBookmarkSuratRequested(
                       suratId: suratId,
                     ));
               },

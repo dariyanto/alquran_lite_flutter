@@ -1,5 +1,5 @@
+import 'package:alquran_lite_flutter/app/core/di/service_locator.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../../../domain/model/ayat_model.dart';
@@ -49,9 +49,9 @@ class AyatItem extends StatelessWidget {
                         ),
                         IconButton(
                           onPressed: () {
-                            context.read<AyatBloc>().add(ToggleAyatBookmarkRequested(
-                                suratId: data.suratId.toString(),
-                                ayatId: data.ayatId.toString()));
+                            sl<AyatBloc>().add(InsertRiwayatAyatRequested(
+                                suratId: data.suratId!,
+                                ayatId: data.ayatId!));
                           },
                           icon: const Icon(
                             Icons.bookmark_add_outlined,
@@ -60,9 +60,9 @@ class AyatItem extends StatelessWidget {
                         ),
                         IconButton(
                           onPressed: () {
-                            context.read<AyatBloc>().add(ToggleAyatBookmarkRequested(
-                                suratId: data.suratId.toString(),
-                                ayatId: data.ayatId.toString()));
+                            sl<AyatBloc>().add(InsertBookmarkAyatRequested(
+                                suratId: data.suratId!,
+                                ayatId: data.ayatId!));
                           },
                           icon: const Icon(
                             Icons.favorite_border,

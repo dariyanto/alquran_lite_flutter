@@ -10,10 +10,10 @@ abstract class RiwayatDao {
   @Query('SELECT * FROM Riwayat WHERE id = :id')
   Future<Riwayat?> findRiwayatById(int id);
 
-  @Insert(onConflict: OnConflictStrategy.replace)
+  @insert
   Future<int> insertRiwayat(Riwayat ayat);
 
-  @Insert(onConflict: OnConflictStrategy.replace)
+  @insert
   Future<List<int>> insertRiwayats(List<Riwayat> ayats);
 
   @Query('DELETE FROM Riwayat WHERE suratId = :suratId AND ayatId = :ayatId')

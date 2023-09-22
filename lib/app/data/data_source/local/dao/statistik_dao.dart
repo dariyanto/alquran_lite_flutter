@@ -10,7 +10,7 @@ abstract class StatistikDao {
   @Query('SELECT * FROM Statistik WHERE id = :id')
   Future<Statistik?> findStatistikById(int id);
 
-  @Insert(onConflict: OnConflictStrategy.replace)
+  @insert
   Future<int> insertStatistik(Statistik ayat);
 
   @Query('DELETE FROM Statistik WHERE suratId = :suratId AND ayatId = :ayatId')

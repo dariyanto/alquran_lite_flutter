@@ -10,10 +10,7 @@ abstract class BookmarkAyatDao {
   @Query('SELECT * FROM BookmarkAyat WHERE id = :id')
   Future<BookmarkAyat?> findBookmarkById(int id);
 
-  @Query('SELECT COUNT(*) FROM BookmarkSurat WHERE suratId = :suratId AND ayatId = :ayatId > 0')
-  Future<bool?> isBookmark(int suratId, int ayatId);
-
-  @Insert(onConflict: OnConflictStrategy.replace)
+  @Insert(onConflict: OnConflictStrategy.ignore)
   Future<int> insertBookmark(BookmarkAyat ayat);
 
   @Query('DELETE FROM BookmarkAyat WHERE suratId = :suratId AND ayatId = :ayatId')

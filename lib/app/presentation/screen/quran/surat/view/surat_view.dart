@@ -10,14 +10,13 @@ class SuratView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var suratBloc = sl<SuratBloc>();
     return Scaffold(
       appBar: AppBar(
         title: const Text('Al-Qur\'an Lite Flutter'),
         centerTitle: true,
       ),
       body: BlocProvider(
-        create: (context) => suratBloc..add(
+        create: (context) => sl<SuratBloc>()..add(
             const SuratFetchRequested(),
           ),
         child: const SuratList(),
