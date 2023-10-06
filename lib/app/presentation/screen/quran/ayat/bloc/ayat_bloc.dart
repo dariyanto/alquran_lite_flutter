@@ -12,16 +12,17 @@ class AyatBloc extends Bloc<AyatEvent, AyatState> {
   final AppRepository repository;
 
   AyatBloc(this.repository) : super(AyatInitial()) {
-    on<AyatEvent>((event, emit) async {
-      if (event is FetchAyatRequested) {
-        await _mapFetchAyatRequestedToState(event, emit);
-      } else if (event is InsertBookmarkAyatRequested) {
-        await _mapBookmarkAyatRequestedToState(event, emit);
-      } else if (event is InsertBookmarkSuratRequested) {
-        await _mapInsertBookmarkSuratRequestedToState(event, emit);
-      } else if (event is InsertRiwayatAyatRequested) {
-        await _mapInsertRiwayatAyatRequestedToState(event, emit);
-      }
+    on<FetchAyatRequested>((event, emit) async {
+      await _mapFetchAyatRequestedToState(event, emit);
+    });
+    on<InsertBookmarkAyatRequested>((event, emit) async {
+      await _mapBookmarkAyatRequestedToState(event, emit);
+    });
+    on<InsertBookmarkSuratRequested>((event, emit) async {
+      await _mapInsertBookmarkSuratRequestedToState(event, emit);
+    });
+    on<InsertRiwayatAyatRequested>((event, emit) async {
+      await _mapInsertRiwayatAyatRequestedToState(event, emit);
     });
   }
 
@@ -37,8 +38,7 @@ class AyatBloc extends Bloc<AyatEvent, AyatState> {
 
   Future<void> _mapBookmarkAyatRequestedToState(
       InsertBookmarkAyatRequested event, Emitter<AyatState> emit) async {
-    var res = await repository.insertBookmarkAyat(
-        event.suratId, event.ayatId);
+    var res = await repository.insertBookmarkAyat(event.suratId, event.ayatId);
     res.fold((l) {
       debugPrint(l.message);
       // emit(AyatError(l.message));
@@ -62,8 +62,7 @@ class AyatBloc extends Bloc<AyatEvent, AyatState> {
 
   Future<void> _mapInsertRiwayatAyatRequestedToState(
       InsertRiwayatAyatRequested event, Emitter<AyatState> emit) async {
-    var res = await repository.insertRiwayatAyat(
-        event.suratId, event.ayatId);
+    var res = await repository.insertRiwayatAyat(event.suratId, event.ayatId);
     res.fold((l) {
       debugPrint(l.message);
       // emit(AyatError(l.message));

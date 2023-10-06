@@ -10,10 +10,8 @@ part 'surat_state.dart';
 class SuratBloc extends Bloc<SuratEvent, SuratState> {
   final AppRepository repository;
   SuratBloc(this.repository) : super(SuratInitial()) {
-    on<SuratEvent>((event, emit) async {
-      if (event is SuratFetchRequested) {
+    on<SuratFetchRequested>((event, emit) async {
         await _mapSuratFetchRequestedToState(emit);
-      }
     });
   }
   
